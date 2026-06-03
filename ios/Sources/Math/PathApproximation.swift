@@ -54,7 +54,7 @@ enum PathApproximation {
 
             toFlatten.append((rightChild, depth + 1))
             toFlatten.append((parent, depth + 1))
-        } }
+        }
 
         output.append(controlPoints[count])
         return output
