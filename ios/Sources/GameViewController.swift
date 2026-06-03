@@ -14,8 +14,8 @@ class GameViewController: UIViewController {
         // Initialize our Game Engine
         GameEngine.shared.attach(to: skView)
         
-        // Launch the initial scene
-        let splashScene = SplashScene(size: skView.bounds.size)
+        // Launch the initial scene using screen bounds to prevent 0-size propagation
+        let splashScene = SplashScene(size: UIScreen.main.bounds.size)
         splashScene.scaleMode = .aspectFill
         GameEngine.shared.setScene(splashScene)
     }

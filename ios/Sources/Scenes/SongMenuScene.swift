@@ -85,7 +85,8 @@ class SongMenuScene: SKScene {
             container.position = CGPoint(x: size.width / 2, y: yPos)
             container.name = "song_\(index)"
             
-            let bg = SKShapeNode(rectOf: CGSize(width: size.width - 100, height: 80), cornerRadius: 8)
+            let rectWidth = max(50, size.width - 100)
+            let bg = SKShapeNode(rectOf: CGSize(width: rectWidth, height: 80), cornerRadius: 8)
             bg.fillColor = SKColor(white: 0.2, alpha: 0.8)
             bg.strokeColor = SKColor(red: 1.0, green: 0.4, blue: 0.7, alpha: 1.0)
             bg.name = "song_\(index)"
@@ -96,7 +97,7 @@ class SongMenuScene: SKScene {
             titleLabel.fontSize = 24
             titleLabel.fontColor = .white
             titleLabel.verticalAlignmentMode = .bottom
-            titleLabel.position = CGPoint(x: -bg.frame.width / 2 + 20, y: 5)
+            titleLabel.position = CGPoint(x: -rectWidth / 2 + 20, y: 5)
             titleLabel.name = "song_\(index)"
             container.addChild(titleLabel)
             
@@ -105,7 +106,7 @@ class SongMenuScene: SKScene {
             diffLabel.fontSize = 18
             diffLabel.fontColor = SKColor(red: 1.0, green: 0.8, blue: 0.2, alpha: 1.0)
             diffLabel.verticalAlignmentMode = .top
-            diffLabel.position = CGPoint(x: -bg.frame.width / 2 + 20, y: -5)
+            diffLabel.position = CGPoint(x: -rectWidth / 2 + 20, y: -5)
             diffLabel.name = "song_\(index)"
             container.addChild(diffLabel)
             
@@ -164,6 +165,6 @@ class SongMenuScene: SKScene {
         let gameplayScene = GameplayScene(beatmap: item.beatmap, audioPath: item.audioPath)
         gameplayScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: 0.5)
-        view?.presentScene(gameplayScene, transition: transition)
+        GameEngine.shared.setScene(gameplayScene, transition: transition)
     }
 }
