@@ -31,15 +31,20 @@ class SongMenuScene: SKScene {
     }
     
     private func loadSongs() {
-        guard let resourcePath = Bundle.main.resourcePath else { return }
-        let testBeatmapPath = (resourcePath as NSString).appendingPathComponent("TestBeatmap")
-        
+        let beatmapDir = AppConfig.beatmapPath
         let fm = FileManager.default
-        let enumerator = fm.enumerator(atPath: testBeatmapPath)
         
-        while let file = enumerator?.nextObject() as? String {
-            if file.hasSuffix(".osu") {
-                let fullPath = (testBeatmapPath as NSString).appendingPathComponent(file)
+        // Ensure the directory exists
+        if !fm.fileExists(atPath: beatmapDir.path) {
+            try? fm.createDirectory(at: beatmapDir, withIntermediateDirectories: true)
+            return
+        }
+        
+        guard let enumerator = fm.enumerator(at: beatmapDir, includingPropertiesForKeys: nil) else { return }
+        
+        for case let fileURL as URL in enumerator {
+            if fileURL.pathExtension.lowercased() == "osu" {
+                let fullPath = fileURL.path
                 let parser = BeatmapParser(path: fullPath)
                 if let beatmap = try? parser.parse(withHitObjects: true) {
                     
@@ -66,7 +71,7 @@ class SongMenuScene: SKScene {
     private func createSongList() {
         if songItems.isEmpty {
             let emptyLabel = SKLabelNode(fontNamed: "Helvetica")
-            emptyLabel.text = "No beatmaps found in ios/Resources/TestBeatmap"
+            emptyLabel.text = "No beatmaps found in Documents/osu!droid/Songs"
             emptyLabel.fontSize = 20
             emptyLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
             addChild(emptyLabel)
