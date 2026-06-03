@@ -146,6 +146,23 @@ struct AppConfig {
             }
         }
     }
+
+    /// Setup file logging so stdout and stderr are written to the Documents directory.
+    static func setupLogger() {
+        let logFileURL = corePath.appendingPathComponent("latest.log")
+        
+        // Ensure core path exists
+        try? FileManager.default.createDirectory(at: corePath, withIntermediateDirectories: true)
+        
+        // Redirect stdout and stderr
+        freopen(logFileURL.path.cString(using: .utf8), "w", stdout)
+        freopen(logFileURL.path.cString(using: .utf8), "w", stderr)
+        
+        print("==========================================")
+        print("[Logger] osu!droid iOS Log Started")
+        print("[Logger] Date: \\(Date())")
+        print("==========================================")
+    }
 }
 
 // MARK: - UserDefaults Extension

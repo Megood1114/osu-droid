@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         // Initialize file system directories
         AppConfig.initializeDirectories()
+        AppConfig.setupLogger()
 
         // Configure audio session for low-latency playback
         configureAudioSession()
