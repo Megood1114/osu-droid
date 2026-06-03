@@ -81,7 +81,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
     
     private func createCircle(pars: [String], beatmap: Beatmap, time: Double, position: Vector2, isNewCombo: Bool, comboOffset: Int, bankInfo: inout SampleBankInfo) throws -> HitCircle {
         let isFirstOrAfterSpinner = beatmap.hitObjects.objects.isEmpty || beatmap.hitObjects.objects.last is Spinner || isNewCombo
-        let circle = HitCircle(time: time, position: position, isNewCombo: isFirstOrAfterSpinner, comboOffset: comboOffset)
+        let circle = HitCircle(startTime: time, position: position, isNewCombo: isFirstOrAfterSpinner, comboOffset: comboOffset)
         
         if pars.count > 5 {
             try readCustomSampleBanks(bankInfo: &bankInfo, str: pars[5])
@@ -184,7 +184,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
         let difficultyControlPoint = beatmap.controlPoints.difficulty.controlPointAt(time: time)
         
         let isFirstOrAfterSpinner = beatmap.hitObjects.objects.isEmpty || beatmap.hitObjects.objects.last is Spinner || isNewCombo
-        let slider = Slider(time: time, position: startPosition, repeatCount: repeatCount, path: path, isNewCombo: isFirstOrAfterSpinner, comboOffset: comboOffset, nodeSamples: nodeSamples)
+        let slider = Slider(startTime: time, position: startPosition, repeatCount: repeatCount, path: path, isNewCombo: isFirstOrAfterSpinner, comboOffset: comboOffset, nodeSamples: nodeSamples)
         
         if !difficultyControlPoint.generateTicks {
             slider.tickDistanceMultiplier = Double.infinity
@@ -199,7 +199,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
     
     private func createSpinner(pars: [String], beatmap: Beatmap, time: Double, isNewCombo: Bool, bankInfo: inout SampleBankInfo) throws -> Spinner {
         let endTime = beatmap.getOffsetTime(time: Double(try parseInt(pars[5])))
-        let spinner = Spinner(time: time, endTime: endTime, isNewCombo: isNewCombo)
+        let spinner = Spinner(startTime: time, endTime: endTime, isNewCombo: isNewCombo)
         if pars.count > 6 {
             try readCustomSampleBanks(bankInfo: &bankInfo, str: pars[6])
         }
@@ -213,7 +213,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
             samples.append(FileHitSampleInfo(filename: bankInfo.filename, volume: bankInfo.volume))
         } else {
             let isLayered = soundType != HitSoundType.none.bit && !containsType(soundType, .normal)
-            samples.append(BankHitSampleInfo(name: BankHitSampleInfo.HIT_NORMAL, bank: bankInfo.normal, customSampleBank: bankInfo.customSampleBank, volume: bankInfo.volume, isLayered: isLayered))
+            samples.append(BankHitSampleInfo(name: BankHitSampleInfo.hitNormal, bank: bankInfo.normal, customSampleBank: bankInfo.customSampleBank, volume: bankInfo.volume, isLayered: isLayered))
         }
         
         func addBankSample(name: String) {
@@ -221,15 +221,15 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
         }
         
         if containsType(soundType, .finish) {
-            addBankSample(name: BankHitSampleInfo.HIT_FINISH)
+            addBankSample(name: BankHitSampleInfo.hitFinish)
         }
         
         if containsType(soundType, .whistle) {
-            addBankSample(name: BankHitSampleInfo.HIT_WHISTLE)
+            addBankSample(name: BankHitSampleInfo.hitWhistle)
         }
         
         if containsType(soundType, .clap) {
-            addBankSample(name: BankHitSampleInfo.HIT_CLAP)
+            addBankSample(name: BankHitSampleInfo.hitClap)
         }
         
         return samples
