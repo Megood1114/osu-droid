@@ -2,11 +2,11 @@ name: iOS Build
 
 on:
   push:
-    branches: [main, develop]
+    branches: [master, develop]
     paths:
       - 'ios/**'
   pull_request:
-    branches: [main]
+    branches: [master]
     paths:
       - 'ios/**'
   workflow_dispatch: # Allow manual trigger
@@ -75,7 +75,7 @@ jobs:
             | xcpretty || true
 
       - name: Build Unsigned IPA (Release)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         working-directory: ios
         run: |
           # Build the archive
@@ -104,7 +104,7 @@ jobs:
           fi
 
       - name: Upload IPA Artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
           name: osu-droid-ios-unsigned
