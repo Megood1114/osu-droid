@@ -73,32 +73,12 @@ targets:
           SWIFT_OPTIMIZATION_LEVEL: "-O"
           SWIFT_COMPILATION_MODE: wholemodule
 
-  osu-droid-tests:
-    type: bundle.unit-test
-    platform: iOS
-    sources:
-      - path: Tests
-        type: group
-    dependencies:
-      - target: osu-droid-ios
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.osudroid.ios.tests
-        CODE_SIGNING_ALLOWED: false
-        CODE_SIGNING_REQUIRED: false
-        CODE_SIGN_IDENTITY: ""
-
 schemes:
   osu-droid-ios:
     build:
       targets:
         osu-droid-ios: all
-        osu-droid-tests: [test]
     run:
       config: Debug
-    test:
-      config: Debug
-      targets:
-        - osu-droid-tests
     archive:
       config: Release

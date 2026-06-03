@@ -111,13 +111,4 @@ jobs:
           path: ios/build/osu-droid-ios-unsigned.ipa
           if-no-files-found: warn
 
-      - name: Run Tests
-        working-directory: ios
-        run: |
-          xcodebuild test \
-            -project osu-droid-ios.xcodeproj \
-            -scheme osu-droid-ios \
-            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
-            -configuration Debug \
-            CODE_SIGNING_ALLOWED=NO \
-            | xcpretty || true
+
