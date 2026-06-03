@@ -96,8 +96,8 @@ public class BeatmapProcessor {
                         break
                     }
 
-                    if stackBaseObject.position.distanceSquared(to: objectN.position) < BeatmapProcessor.stackDistanceSquared ||
-                        (stackBaseObject is Slider && (stackBaseObject as! Slider).endPosition.distanceSquared(to: objectN.position) < BeatmapProcessor.stackDistanceSquared)
+                    if stackBaseObject.position.getDistanceSquared(objectN.position) < BeatmapProcessor.stackDistanceSquared ||
+                        (stackBaseObject is Slider && (stackBaseObject as! Slider).endPosition.getDistanceSquared(objectN.position) < BeatmapProcessor.stackDistanceSquared)
                     {
                         stackBaseIndex = n
 
@@ -151,13 +151,13 @@ public class BeatmapProcessor {
                         extendedStartIndex = n
                     }
 
-                    if let sliderN = objectN as? Slider, sliderN.endPosition.distanceSquared(to: objectI.position) < BeatmapProcessor.stackDistanceSquared {
+                    if let sliderN = objectN as? Slider, sliderN.endPosition.getDistanceSquared(objectI.position) < BeatmapProcessor.stackDistanceSquared {
                         let offset = objectI.difficultyStackHeight - objectN.difficultyStackHeight + 1
 
                         for j in (n + 1)...i {
                             let objectJ = objects[j]
 
-                            if sliderN.endPosition.distanceSquared(to: objectJ.position) < BeatmapProcessor.stackDistanceSquared {
+                            if sliderN.endPosition.getDistanceSquared(objectJ.position) < BeatmapProcessor.stackDistanceSquared {
                                 objectJ.difficultyStackHeight -= offset
                                 objectJ.gameplayStackHeight -= offset
                             }
@@ -167,7 +167,7 @@ public class BeatmapProcessor {
                         break
                     }
 
-                    if objectN.position.distanceSquared(to: objectI.position) < BeatmapProcessor.stackDistanceSquared {
+                    if objectN.position.getDistanceSquared(objectI.position) < BeatmapProcessor.stackDistanceSquared {
                         objectN.difficultyStackHeight = objectI.difficultyStackHeight + 1
                         objectN.gameplayStackHeight = objectI.gameplayStackHeight + 1
                         objectI = objectN
@@ -189,7 +189,7 @@ public class BeatmapProcessor {
                         break
                     }
 
-                    if objectN.endPosition.distanceSquared(to: objectI.position) < BeatmapProcessor.stackDistanceSquared {
+                    if objectN.endPosition.getDistanceSquared(objectI.position) < BeatmapProcessor.stackDistanceSquared {
                         objectN.difficultyStackHeight = objectI.difficultyStackHeight + 1
                         objectN.gameplayStackHeight = objectI.gameplayStackHeight + 1
                         objectI = objectN
@@ -220,11 +220,11 @@ public class BeatmapProcessor {
                     break
                 }
 
-                if objectJ.position.distanceSquared(to: currentObject.position) < BeatmapProcessor.stackDistanceSquared {
+                if objectJ.position.getDistanceSquared(currentObject.position) < BeatmapProcessor.stackDistanceSquared {
                     currentObject.difficultyStackHeight += 1
                     currentObject.gameplayStackHeight += 1
                     startTime = objectJ.startTime
-                } else if objectJ.position.distanceSquared(to: currentObject.endPosition) < BeatmapProcessor.stackDistanceSquared {
+                } else if objectJ.position.getDistanceSquared(currentObject.endPosition) < BeatmapProcessor.stackDistanceSquared {
                     sliderStack += 1
                     objectJ.difficultyStackHeight -= sliderStack
                     objectJ.gameplayStackHeight -= sliderStack

@@ -21,7 +21,7 @@ public class BeatmapControlPoints {
     /// - Parameter time: The time to find the closest beat snap divisor for.
     /// - Returns: The closest beat snap divisor to `time`.
     public func getClosestBeatDivisor(time: Double) -> Int {
-        let timingPoint = timing.controlPointAt(time: time)
+        let timingPoint = timing.controlPointAt(time)
 
         var closestDivisor = 0
         var closestTime = Double.greatestFiniteMagnitude

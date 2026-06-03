@@ -16,7 +16,7 @@ public class BeatmapConverter {
         let newBeatmap = beatmap.clone()
         
         // Shallow clone isn't enough to ensure we don't mutate some beatmap properties unexpectedly.
-        newBeatmap.difficulty = beatmap.difficulty.clone()
+        newBeatmap.difficulty = beatmap.difficulty.copy()
         
         let convertedHitObjects = convertHitObjects()
         convertedHitObjects.objects.sort { $0.startTime < $1.startTime }
@@ -57,7 +57,7 @@ public class BeatmapConverter {
             // Prior to v8, speed multipliers don't adjust for how many ticks are generated over the same distance.
             // This results in more (or less) ticks being generated in <v8 maps for the same time duration.
             newSlider.tickDistanceMultiplier = beatmap.formatVersion < 8 
-                ? 1.0 / beatmap.controlPoints.difficulty.controlPointAt(time: newSlider.startTime).speedMultiplier 
+                ? 1.0 / beatmap.controlPoints.difficulty.controlPointAt(newSlider.startTime).speedMultiplier 
                 : 1.0
             newSlider.generateTicks = slider.generateTicks
             

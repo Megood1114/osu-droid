@@ -15,7 +15,7 @@ class BeatmapGeneralParser: BeatmapKeyValueSectionParser {
         case "PreviewTime":
             beatmap.general.previewTime = beatmap.getOffsetTime(time: try parseInt(property.1))
         case "Countdown":
-            beatmap.general.countdown = BeatmapCountdown(rawValue: property.1) ?? .none // Adjust based on BeatmapCountdown translation
+            beatmap.general.countdown = BeatmapCountdown.parse(property.1)
         case "SampleSet":
             beatmap.general.sampleBank = SampleBank.parse(property.1)
         case "SampleVolume":

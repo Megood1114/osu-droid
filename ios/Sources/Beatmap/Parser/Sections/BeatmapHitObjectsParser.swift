@@ -61,7 +61,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
         let soundType = try parseInt(it[4])
         var bankInfo = SampleBankInfo()
         
-        let objType = HitObjectType(rawValue: type % 16) ?? .normal
+        let objType = HitObjectType(rawValue: type % 16)
         
         let obj: HitObject
         switch objType {
@@ -114,7 +114,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
         }
         curvePointsData = Array(curvePointsData.dropLast(dropCount))
         
-        var sliderType = SliderPathType.parse(String(curvePointsData[0].first ?? " "))
+        var sliderType = SliderPathType.parse(curvePointsData[0].first ?? " ")
         var curvePoints = [Vector2(x: 0, y: 0)]
         
         for i in 1..<curvePointsData.count {
@@ -152,7 +152,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
             }
         }
         
-        let path = SliderPath(type: sliderType, controlPoints: curvePoints, expectedDistance: rawLength)
+        let path = SliderPath(pathType: sliderType, controlPoints: curvePoints, expectedDistance: rawLength)
         
         if pars.count > 10 {
             try readCustomSampleBanks(bankInfo: &bankInfo, str: pars[10], banksOnly: true)
@@ -181,7 +181,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
             nodeSamples.append(convertSoundType(soundType: nodeSoundTypes[i], bankInfo: nodeBankInfo[i]))
         }
         
-        let difficultyControlPoint = beatmap.controlPoints.difficulty.controlPointAt(time: time)
+        let difficultyControlPoint = beatmap.controlPoints.difficulty.controlPointAt(time)
         
         let isFirstOrAfterSpinner = beatmap.hitObjects.objects.isEmpty || beatmap.hitObjects.objects.last is Spinner || isNewCombo
         let slider = Slider(startTime: time, position: startPosition, repeatCount: repeatCount, path: path, isNewCombo: isFirstOrAfterSpinner, comboOffset: comboOffset, nodeSamples: nodeSamples)

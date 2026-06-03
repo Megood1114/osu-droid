@@ -60,7 +60,8 @@ class GameViewController: UIViewController {
         // 3. Find the exact audio file mentioned in the beatmap if possible,
         // or just fallback to any audio file found in the folder.
         var finalAudioPath = audioFilePath
-        if let audioFileName = playableMap.general.audioFilename {
+        let audioFileName = playableMap.general.audioFilename
+        if !audioFileName.isEmpty {
             // Attempt to find the specific audio file
             let specificAudioPath = (resourcePath as NSString).appendingPathComponent("TestBeatmap/\(audioFileName)")
             if fm.fileExists(atPath: specificAudioPath) {
@@ -80,7 +81,7 @@ class GameViewController: UIViewController {
         }
         
         // 4. Start the GameplayScene!
-        let gameplayScene = GameplayScene(beatmap: playableMap, audioPath: resolvedAudioPath)
+        let gameplayScene = GameplayScene(beatmap: playableMap.createDroidPlayableBeatmap(), audioPath: resolvedAudioPath)
         GameEngine.shared.setScene(gameplayScene)
     }
     

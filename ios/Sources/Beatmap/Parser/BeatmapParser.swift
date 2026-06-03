@@ -49,7 +49,7 @@ class BeatmapParser {
         var currentSection: BeatmapSection? = nil
         
         let beatmap = Beatmap(mode: mode)
-        beatmap.md5 = precomputedMD5 ?? FileUtils.getMD5Checksum(file: file)
+        beatmap.md5 = precomputedMD5 ?? ""
         beatmap.filePath = file.path
         beatmap.formatVersion = formatVersion
         
@@ -74,7 +74,7 @@ class BeatmapParser {
             // [SectionName]
             if line.hasPrefix("[") && line.hasSuffix("]") {
                 let sectionName = String(line.dropFirst().dropLast())
-                currentSection = BeatmapSection(rawValue: sectionName)
+                currentSection = BeatmapSection.parse(sectionName)
                 
                 // HitObjects are always in the last section
                 if currentSection == .hitObjects && !withHitObjects {

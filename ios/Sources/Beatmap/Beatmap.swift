@@ -86,7 +86,7 @@ open class Beatmap: IBeatmap {
             $0.applyToDifficulty(mode: mode, difficulty: converted.difficulty, mods: mods ?? [])
         }
         
-        let processor = BeatmapProcessor(converted)
+        let processor = BeatmapProcessor(beatmap: converted)
         
         processor.preProcess()
         
@@ -110,7 +110,7 @@ open class Beatmap: IBeatmap {
         processor.postProcess()
         
         mods?.compactMap { $0 as? IModApplicableToBeatmap }.forEach {
-            $0.applyToBeatmap(beatmap: converted)
+            $0.applyToBeatmap(converted)
         }
         
         return converted

@@ -129,7 +129,7 @@ open class BeatmapHitObjects: Sequence {
         return l
     }
 
-    func makeIterator() -> IndexingIterator<[HitObject]> {
+    public func makeIterator() -> IndexingIterator<[HitObject]> {
         return objects.makeIterator()
     }
 }
