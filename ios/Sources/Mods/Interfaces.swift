@@ -56,7 +56,7 @@ protocol IModApplicableToTrackRate {
     func applyToRate(time: Double, rate: Float) -> Float
 }
 
-public extension IModApplicableToTrackRate {
+extension IModApplicableToTrackRate {
     func applyToRate(time: Double, rate: Float = 1.0) -> Float {
         return applyToRate(time: time, rate: rate)
     }
