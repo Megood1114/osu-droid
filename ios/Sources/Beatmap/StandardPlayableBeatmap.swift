@@ -7,6 +7,6 @@ public class StandardPlayableBeatmap: PlayableBeatmap {
     }
     
     public override func createHitWindow() -> HitWindow {
-        return StandardHitWindow(difficulty.od)
+        return StandardHitWindow(overallDifficulty: Double(difficulty.od))
     }
 }

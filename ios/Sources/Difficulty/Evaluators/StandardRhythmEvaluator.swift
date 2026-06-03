@@ -36,7 +36,7 @@ public final class StandardRhythmEvaluator {
         var prevObject = current.previous(rhythmStart)!
         var lastObject = current.previous(rhythmStart + 1)!
 
-        for i in stride(from: rhythmStart, downTo: 1, by: -1) {
+        for i in stride(from: rhythmStart, through: 1, by: -1) {
             let currentObject = current.previous(i - 1)!
 
             let timeDecay = (HISTORY_TIME_MAX - (current.startTime - currentObject.startTime)) / HISTORY_TIME_MAX

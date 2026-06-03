@@ -8,9 +8,9 @@ public class DroidPlayableBeatmap: PlayableBeatmap {
     
     public override func createHitWindow() -> HitWindow {
         if mods.contains(where: { $0 is ModPrecise }) {
-            return PreciseDroidHitWindow(difficulty.od)
+            return PreciseDroidHitWindow(overallDifficulty: Double(difficulty.od))
         } else {
-            return DroidHitWindow(difficulty.od)
+            return DroidHitWindow(overallDifficulty: Double(difficulty.od))
         }
     }
 }

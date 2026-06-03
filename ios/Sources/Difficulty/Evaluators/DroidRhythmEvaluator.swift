@@ -48,7 +48,7 @@ public final class DroidRhythmEvaluator {
         var prevObject = validPrevious[rhythmStart]
         var lastObject = validPrevious[rhythmStart + 1]
 
-        for i in stride(from: rhythmStart, downTo: 1, by: -1) {
+        for i in stride(from: rhythmStart, through: 1, by: -1) {
             let currentObject = validPrevious[i - 1]
 
             let timeDecay = (HISTORY_TIME_MAX - (current.startTime - currentObject.startTime)) / HISTORY_TIME_MAX
