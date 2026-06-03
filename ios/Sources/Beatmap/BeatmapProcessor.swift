@@ -22,7 +22,7 @@ public class BeatmapProcessor {
         var lastObj: HitObject? = nil
 
         for obj in beatmap.hitObjects.objects {
-            obj.updateComboInformation(lastObj)
+            obj.updateComboInformation(lastObj: lastObj)
             lastObj = obj
         }
 

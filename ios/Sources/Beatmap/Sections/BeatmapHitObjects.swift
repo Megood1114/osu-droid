@@ -1,7 +1,7 @@
 import Foundation
 
 /// Contains information about hit objects of a beatmap.
-open class BeatmapHitObjects: Sequence {
+class BeatmapHitObjects: Sequence {
     /// All objects in this beatmap.
     var objects: [HitObject] = []
 
@@ -129,7 +129,7 @@ open class BeatmapHitObjects: Sequence {
         return l
     }
 
-    public func makeIterator() -> IndexingIterator<[HitObject]> {
+    func makeIterator() -> IndexingIterator<[HitObject]> {
         return objects.makeIterator()
     }
 }
