@@ -22,7 +22,7 @@ public final class StandardSpeed: StandardStrainSkill {
     }
 
     public func countTopWeightedSliders() -> Double {
-        return StrainUtils.countTopWeightedSliders(sliderStrains: sliderStrains, difficulty: difficulty)
+        return StrainUtils.countTopWeightedSliders(sliderStrains: sliderStrains, difficultyValue: difficulty)
     }
 
     public override func strainValueAt(current: StandardDifficultyHitObject) -> Double {

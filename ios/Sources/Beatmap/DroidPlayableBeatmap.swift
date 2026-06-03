@@ -6,7 +6,7 @@ public class DroidPlayableBeatmap: PlayableBeatmap {
         super.init(baseBeatmap: baseBeatmap, mode: .droid, mods: mods)
     }
     
-    public override func createHitWindow() -> HitWindow {
+    override func createHitWindow() -> HitWindow {
         if mods.contains(where: { $0 is ModPrecise }) {
             return PreciseDroidHitWindow(overallDifficulty: Double(difficulty.od))
         } else {

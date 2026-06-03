@@ -20,7 +20,7 @@ public class DroidDifficultyHitObject: DifficultyHitObject {
     /// Adjusted preempt time of the HitObject, taking speed multiplier into account.
     public let timePreempt: Double
 
-    public init(
+    init(
         obj: HitObject,
         lastObj: HitObject?,
         clockRate: Double,

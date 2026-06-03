@@ -6,7 +6,7 @@ public class StandardPlayableBeatmap: PlayableBeatmap {
         super.init(baseBeatmap: baseBeatmap, mode: .standard, mods: mods)
     }
     
-    public override func createHitWindow() -> HitWindow {
+    override func createHitWindow() -> HitWindow {
         return StandardHitWindow(overallDifficulty: Double(difficulty.od))
     }
 }

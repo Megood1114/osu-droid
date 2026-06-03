@@ -13,7 +13,7 @@ public final class StandardSpeedEvaluator {
         let prev = current.previous(0)
         var strainTime = current.strainTime
 
-        let doubletapness = 1.0 - current.getDoubletapness(current.next(0))
+        let doubletapness = 1.0 - current.getDoubletapness(nextObj: current.next(0))
 
         strainTime /= min(1.0, max(0.92, strainTime / current.fullGreatWindow / 0.93))
 

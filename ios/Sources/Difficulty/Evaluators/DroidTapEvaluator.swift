@@ -12,7 +12,7 @@ public final class DroidTapEvaluator {
             return 0.0
         }
 
-        let doubletapness = considerCheesability ? (1.0 - current.getDoubletapness(current.next(0))) : 1.0
+        let doubletapness = considerCheesability ? (1.0 - current.getDoubletapness(nextObj: current.next(0))) : 1.0
 
         var strainTime = current.strainTime
         if let cap = strainTimeCap {

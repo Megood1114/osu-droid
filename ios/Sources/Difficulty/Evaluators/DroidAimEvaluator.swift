@@ -62,7 +62,7 @@ public final class DroidAimEvaluator {
                 acuteAngleBonus = calculateAcuteAngleBonus(angle: currentAngle)
                 acuteAngleBonus *= 0.08 + 0.92 * (1.0 - min(acuteAngleBonus, pow(calculateAcuteAngleBonus(angle: lastAngle), 3.0)))
                 acuteAngleBonus *= angleBonus *
-                    DifficultyCalculationUtils.smootherstep(x: DifficultyCalculationUtils.millisecondsToBPM(current.strainTime, 2), start: 300.0, end: 400.0) *
+                    DifficultyCalculationUtils.smootherstep(x: DifficultyCalculationUtils.millisecondsToBPM(milliseconds: current.strainTime, delimiter: 2), start: 300.0, end: 400.0) *
                     DifficultyCalculationUtils.smootherstep(x: current.lazyJumpDistance, start: diameter, end: diameter * 2.0)
             }
 

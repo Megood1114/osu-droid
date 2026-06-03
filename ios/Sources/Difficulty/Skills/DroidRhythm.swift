@@ -16,7 +16,7 @@ public final class DroidRhythm: DroidStrainSkill {
 
     public override func strainValueAt(current: DroidDifficultyHitObject) -> Double {
         let rhythmMultiplier = DroidRhythmEvaluator.evaluateDifficultyOf(current: current, useSliderAccuracy: useSliderAccuracy)
-        let doubletapness = 1.0 - current.getDoubletapness(current.next(0))
+        let doubletapness = 1.0 - current.getDoubletapness(nextObj: current.next(0))
 
         current.rhythmMultiplier = rhythmMultiplier * doubletapness
 

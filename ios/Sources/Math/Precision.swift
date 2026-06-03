@@ -52,3 +52,12 @@ enum Precision {
         abs(value1 - value2) <= acceptableDifference
     }
 }
+
+extension Double {
+    func toRadians() -> Double {
+        return self * .pi / 180.0
+    }
+    func toDegrees() -> Double {
+        return self * 180.0 / .pi
+    }
+}

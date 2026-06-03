@@ -51,7 +51,7 @@ public final class StandardRhythmEvaluator {
             let deltaDifference = max(prevDelta, currentDelta) / min(prevDelta, currentDelta)
             let deltaDifferenceFraction = deltaDifference - trunc(deltaDifference)
 
-            let currentRatio = 1.0 + RHYTHM_RATIO_MULTIPLIER * min(0.5, DifficultyCalculationUtils.smoothstepBellCurve(deltaDifferenceFraction))
+            let currentRatio = 1.0 + RHYTHM_RATIO_MULTIPLIER * min(0.5, DifficultyCalculationUtils.smoothstepBellCurve(x: deltaDifferenceFraction))
 
             let differenceMultiplier = max(0.0, min(1.0, 2.0 - deltaDifference / 8.0))
             let windowPenalty = max(0.0, min(1.0, (abs(prevDelta - currentDelta) - deltaDifferenceEpsilon) / deltaDifferenceEpsilon))
@@ -99,7 +99,7 @@ public final class StandardRhythmEvaluator {
 
                         effectiveRatio *= min(
                             3.0 / Double(islandCount),
-                            pow(1.0 / Double(islandCount), DifficultyCalculationUtils.logistic(Double(island.delta), 58.33, 0.24, 2.75))
+                            pow(1.0 / Double(islandCount), DifficultyCalculationUtils.logistic(x: Double(island.delta), midpointOffset: 58.33, multiplier: 0.24, maxValue: 2.75))
                         )
 
                         break
@@ -109,7 +109,7 @@ public final class StandardRhythmEvaluator {
                         islandCounts[island] = 1
                     }
 
-                    effectiveRatio *= 1.0 - prevObject.getDoubletapness(prevObject.next(0)) * 0.75
+                    effectiveRatio *= 1.0 - prevObject.getDoubletapness(nextObj: prevObject.next(0)) * 0.75
 
                     rhythmComplexitySum += sqrt(effectiveRatio * startRatio) * currentHistoricalDecay
 
@@ -142,6 +142,6 @@ public final class StandardRhythmEvaluator {
             prevObject = currentObject
         }
 
-        return sqrt(4.0 + rhythmComplexitySum * RHYTHM_OVERALL_MULTIPLIER) / 2.0 * (1.0 - current.getDoubletapness(current.next(0)))
+        return sqrt(4.0 + rhythmComplexitySum * RHYTHM_OVERALL_MULTIPLIER) / 2.0 * (1.0 - current.getDoubletapness(nextObj: current.next(0)))
     }
 }

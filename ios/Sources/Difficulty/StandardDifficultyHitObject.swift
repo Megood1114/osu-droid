@@ -10,7 +10,7 @@ public class StandardDifficultyHitObject: DifficultyHitObject {
         return max(1.0, 1.0 + Double(30.0 - obj.difficultyRadius) / 40.0)
     }
 
-    public init(
+    init(
         obj: HitObject,
         lastObj: HitObject,
         clockRate: Double,

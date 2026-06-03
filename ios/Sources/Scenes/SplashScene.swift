@@ -39,8 +39,9 @@ class SplashScene: SKScene {
 
         // Animate in
         let fadeIn = SKAction.fadeIn(withDuration: 0.8)
-        let scaleUp = SKAction.scale(from: 0.8, to: 1.0, duration: 0.8)
-        scaleUp.timingMode = .easeOut
+        logoNode.setScale(0.8)
+        let scaleUp = SKAction.scale(to: 1.0, duration: 0.8)
+        scaleUp.timingMode = SKActionTimingMode.easeOut
         let appear = SKAction.group([fadeIn, scaleUp])
 
         logoNode.run(appear)
