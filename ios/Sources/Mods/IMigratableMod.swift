@@ -10,5 +10,5 @@ public protocol IMigratableMod {
      * @param difficulty The [BeatmapDifficulty] to migrate this [IMigratableMod] against.
      * @return The new [Mod].
      */
-    func migrate(difficulty: BeatmapDifficulty): Mod
+    func migrate(difficulty: BeatmapDifficulty) -> Mod
 }

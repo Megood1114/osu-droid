@@ -7,7 +7,7 @@ class GameScene: SKScene {
     private var lastUpdateTime: TimeInterval = 0
     
     override func didMove(to view: SKView) {
-        super.didMove(to view: view)
+        super.didMove(to: view)
         setupScene()
     }
     

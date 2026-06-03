@@ -10,5 +10,5 @@ public protocol IModApplicableToBeatmap {
      * @param beatmap The [Beatmap] to apply to.
      * @param scope The [CoroutineScope] to use for the operation.
      */
-    func applyToBeatmap(beatmap: Beatmap, scope: CoroutineScope? = null)
+    func applyToBeatmap(_ beatmap: Beatmap)
 }

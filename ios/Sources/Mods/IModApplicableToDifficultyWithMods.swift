@@ -19,6 +19,6 @@ public protocol IModApplicableToDifficultyWithMods {
      * @param difficulty The [BeatmapDifficulty] to mutate.
      * @param mods The [Mod]s that are used.
      */
-    func applyToDifficulty(mode: GameMode, difficulty: BeatmapDifficulty, mods: Iterable<Mod>)
+    func applyToDifficulty(_ mode: GameMode, _ difficulty: BeatmapDifficulty, _ mods: Iterable<Mod>)
 
 }

@@ -20,5 +20,5 @@ public protocol IModApplicableToHitObjectWithMods {
      * @param mods The [Mod]s that are used.
      * @param scope The [CoroutineScope] to use for the operation.
      */
-    func applyToHitObject(mode: GameMode, hitObject: HitObject, mods: Iterable<Mod>, scope: CoroutineScope? = null)
+    func applyToHitObject(_ mode: GameMode, _ hitObject: HitObject, _ mods: [Mod])
 }

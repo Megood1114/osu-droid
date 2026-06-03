@@ -10,5 +10,5 @@ public protocol IModApplicableToTrackRate {
      * @param rate The playback rate before applying this [Mod].
      * @return The playback rate after applying this [Mod].
      */
-    func applyToRate(time: Double, rate: Float = 1f): Float
+    func applyToRate(_ time: Double, _ rate: Float) -> Float
 }
