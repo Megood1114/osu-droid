@@ -1,18 +1,18 @@
 import Foundation
 
 /// Converts a `Beatmap` for another `GameMode`.
-public class BeatmapConverter {
+class BeatmapConverter {
     /// The `Beatmap` to convert.
-    public let beatmap: Beatmap
+    let beatmap: Beatmap
 
-    public init(beatmap: Beatmap) {
+    init(beatmap: Beatmap) {
         self.beatmap = beatmap
     }
 
     /// Converts `Beatmap`.
     ///
     /// - Returns: The converted `Beatmap`.
-    public func convert() -> Beatmap {
+    func convert() -> Beatmap {
         let newBeatmap = beatmap.clone()
         
         // Shallow clone isn't enough to ensure we don't mutate some beatmap properties unexpectedly.

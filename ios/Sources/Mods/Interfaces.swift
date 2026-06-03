@@ -28,19 +28,19 @@ public struct APIMod: Codable {
 
 // MARK: - Interfaces
 
-public protocol IMigratableMod {
+protocol IMigratableMod {
     func migrate(difficulty: BeatmapDifficulty) -> Mod
 }
 
-public protocol IModApplicableToBeatmap {
+protocol IModApplicableToBeatmap {
     func applyToBeatmap(_ beatmap: Beatmap)
 }
 
-public protocol IModApplicableToDifficulty {
+protocol IModApplicableToDifficulty {
     func applyToDifficulty(mode: GameMode, difficulty: BeatmapDifficulty, adjustmentMods: [IModFacilitatesAdjustment])
 }
 
-public protocol IModApplicableToDifficultyWithMods {
+protocol IModApplicableToDifficultyWithMods {
     func applyToDifficulty(mode: GameMode, difficulty: BeatmapDifficulty, mods: [Mod])
 }
 
@@ -52,7 +52,7 @@ protocol IModApplicableToHitObjectWithMods {
     func applyToHitObject(mode: GameMode, hitObject: HitObject, mods: [Mod])
 }
 
-public protocol IModApplicableToTrackRate {
+protocol IModApplicableToTrackRate {
     func applyToRate(time: Double, rate: Float) -> Float
 }
 
@@ -62,8 +62,8 @@ public extension IModApplicableToTrackRate {
     }
 }
 
-public protocol IModFacilitatesAdjustment {}
+protocol IModFacilitatesAdjustment {}
 
-public protocol IModRequiresBeatmapDifficulty {
+protocol IModRequiresBeatmapDifficulty {
     func applyFromBeatmapDifficulty(difficulty: BeatmapDifficulty)
 }
