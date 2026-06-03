@@ -57,6 +57,16 @@ jobs:
           else
             mkdir -p Frameworks/bassmix.xcframework
           fi
+          
+          # Download BASS FX for iOS
+          curl -L -o /tmp/bass_fx-ios.zip https://www.un4seen.com/files/z/0/bass_fx24-ios.zip
+          unzip -o /tmp/bass_fx-ios.zip -d /tmp/bass_fx-ios
+          
+          if [ -d "/tmp/bass_fx-ios/bass_fx.xcframework" ]; then
+            cp -R /tmp/bass_fx-ios/bass_fx.xcframework Frameworks/
+          else
+            mkdir -p Frameworks/bass_fx.xcframework
+          fi
 
       - name: Generate Xcode Project
         working-directory: ios
