@@ -10,6 +10,11 @@ struct Vector2: Equatable, Hashable, CustomStringConvertible {
     var y: Float
 
     /// Creates a vector with the given X and Y components.
+    init(_ x: Float, _ y: Float) {
+        self.x = x
+        self.y = y
+    }
+
     init(x: Float, y: Float) {
         self.x = x
         self.y = y

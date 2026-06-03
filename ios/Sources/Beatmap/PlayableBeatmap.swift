@@ -35,7 +35,7 @@ open class PlayableBeatmap: IBeatmap {
         self.mode = mode
         self.mods = mods ?? []
         if let mods = mods {
-            self.speedMultiplier = mods.compactMap { self.speedMultiplier = Float(ModUtils.calculateRateWithMods(mods, Double.infinity)) as? ModRateAdjust }.reduce(1.0) { self.speedMultiplier = Float(ModUtils.calculateRateWithMods(mods, Double.infinity)) * $1.trackRateMultiplier }
+            self.speedMultiplier = mods.compactMap { $0 as? ModRateAdjust }.reduce(1.0) { $0 * $1.trackRateMultiplier }
         } else {
             self.speedMultiplier = 1.0
         }

@@ -256,13 +256,13 @@ class Slider: HitObject {
             startTime + Double(HitObject.controlPointLeniency) + 1
         )
 
-        samples = samples.map { sampleControlPoint.applyTo(hitSampleInfo: applyTo($0)) }
+        samples = samples.map { sampleControlPoint.applyTo(hitSampleInfo: $0) }
 
         for i in nodeSamples.indices {
             let time = startTime + Double(i) * spanDuration + Double(HitObject.controlPointLeniency)
             let nodeSamplePoint = controlPoints.sample.controlPointAt(time)
 
-            nodeSamples[i] = nodeSamples[i].map { nodeSamplePoint.applyTo(hitSampleInfo: applyTo($0)) }
+            nodeSamples[i] = nodeSamples[i].map { nodeSamplePoint.applyTo(hitSampleInfo: $0) }
         }
 
         createSlidingSamples(controlPoints: controlPoints)
@@ -434,7 +434,7 @@ class Slider: HitObject {
         if normalSlide != nil {
             auxiliarySamples.append(SequenceHitSampleInfo(
                 samples: samplePoints.map { point in
-                    (point.time, point.applyTo(Slider.baseNormalSlideSample))
+                    (point.time, point.applyTo(hitSampleInfo: Slider.baseNormalSlideSample))
                 }
             ))
         }
@@ -442,7 +442,7 @@ class Slider: HitObject {
         if whistleSlide != nil {
             auxiliarySamples.append(SequenceHitSampleInfo(
                 samples: samplePoints.map { point in
-                    (point.time, point.applyTo(Slider.baseWhistleSlideSample))
+                    (point.time, point.applyTo(hitSampleInfo: Slider.baseWhistleSlideSample))
                 }
             ))
         }

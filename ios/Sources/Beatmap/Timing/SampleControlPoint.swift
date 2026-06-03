@@ -46,9 +46,9 @@ class SampleControlPoint: ControlPoint {
             return h.copy(volume: volume)
         } else if let h = hitSampleInfo as? BankHitSampleInfo {
             return h.copy(
-                volume: volume,
                 bank: h.bank != .none ? h.bank : sampleBank,
-                customSampleBank: h.customSampleBank > 0 ? h.customSampleBank : customSampleBank
+                customSampleBank: h.customSampleBank > 0 ? h.customSampleBank : customSampleBank,
+                volume: volume
             )
         } else {
             fatalError("Unknown type of hit sample.")

@@ -34,6 +34,8 @@ targets:
         embed: true
       - framework: Frameworks/bassmix.xcframework
         embed: true
+      - framework: Frameworks/bass_fx.xcframework
+        embed: true
       - sdk: SpriteKit.framework
       - sdk: Metal.framework
       - sdk: MetalKit.framework

@@ -5,3 +5,4 @@
 
 #import "bass.h"
 #import "bassmix.h"
+#import "bass_fx.h"
