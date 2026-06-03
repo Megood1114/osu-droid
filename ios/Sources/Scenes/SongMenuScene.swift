@@ -33,27 +33,39 @@ class SongMenuScene: SKScene {
     private func loadSongs() {
         let beatmapDir = AppConfig.beatmapPath
         let fm = FileManager.default
+        print("[SongMenuScene] Loading songs from \(beatmapDir.path)")
         
         // Ensure the directory exists
         if !fm.fileExists(atPath: beatmapDir.path) {
             try? fm.createDirectory(at: beatmapDir, withIntermediateDirectories: true)
+            print("[SongMenuScene] Created Songs directory")
             return
         }
         
-        guard let enumerator = fm.enumerator(at: beatmapDir, includingPropertiesForKeys: nil) else { return }
+        guard let enumerator = fm.enumerator(at: beatmapDir, includingPropertiesForKeys: nil) else {
+            print("[SongMenuScene] Failed to create enumerator")
+            return
+        }
         
         for case let fileURL as URL in enumerator {
             if fileURL.pathExtension.lowercased() == "osu" {
                 let fullPath = fileURL.path
+                print("[SongMenuScene] Found .osu file: \(fullPath)")
                 let parser = BeatmapParser(path: fullPath)
-                if let beatmap = try? parser.parse(withHitObjects: true) {
+                do {
+                    print("[SongMenuScene] Attempting to parse beatmap...")
+                    let beatmap = try parser.parse(withHitObjects: true)
+                    print("[SongMenuScene] Parse successful. Creating playable beatmap...")
                     
                     // Find audio path
                     let audioFileName = beatmap.general.audioFilename
                     let dirPath = (fullPath as NSString).deletingLastPathComponent
                     let audioPath = (dirPath as NSString).appendingPathComponent(audioFileName)
                     
+                    print("[SongMenuScene] Applying mods and creating DroidPlayableBeatmap...")
                     let playable = beatmap.createDroidPlayableBeatmap()
+                    print("[SongMenuScene] DroidPlayableBeatmap created!")
+                    
                     let item = SongItem(
                         title: beatmap.metadata.title,
                         artist: beatmap.metadata.artist,
@@ -63,9 +75,13 @@ class SongMenuScene: SKScene {
                         beatmap: playable
                     )
                     songItems.append(item)
+                    print("[SongMenuScene] Appended song item: \(item.title)")
+                } catch {
+                    print("[SongMenuScene] Failed to parse beatmap: \(error)")
                 }
             }
         }
+        print("[SongMenuScene] Finished loading songs. Total: \(songItems.count)")
     }
     
     private func createSongList() {

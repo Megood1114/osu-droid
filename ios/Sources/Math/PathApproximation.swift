@@ -21,27 +21,22 @@ enum PathApproximation {
         if count < 0 {
             return output
         }
-
         // "toFlatten" contains all the curves which are not yet approximated well enough.
         // We use a stack to emulate recursion without the risk of running into a stack overflow.
-        // (More specifically, we iteratively and adaptively refine our curve with a
-        // depth-first search (https://en.wikipedia.org/wiki/Depth-first_search)
-        // over the tree resulting from the subdivisions we make.)
-        var toFlatten = [[Vector2?]]()
+        var toFlatten = [([Vector2?], Int)]()
         var freeBuffers = [[Vector2?]]()
 
-        toFlatten.append(controlPoints.map { $0 as Vector2? })
+        toFlatten.append((controlPoints.map { $0 as Vector2? }, 0))
         var subdivisionBuffer1 = [Vector2?](repeating: nil, count: count + 1)
         var subdivisionBuffer2 = [Vector2?](repeating: nil, count: count * 2 + 1)
 
         while !toFlatten.isEmpty {
-            var parent = toFlatten.popLast()!
+            let item = toFlatten.removeLast()
+            var parent = item.0
+            let depth = item.1
 
-            if bezierIsFlatEnough(parent) {
-                // If the control points we currently operate on are sufficiently "flat", we use
-                // an extension to De Casteljau's algorithm to obtain a piecewise-linear approximation
-                // of the Bézier curve represented by our control points, consisting of the same amount
-                // of points as there are control points.
+            // Prevent infinite memory loop in case of floating point inaccuracies or extreme curves
+            if depth > 100 || bezierIsFlatEnough(parent) {
                 bezierApproximate(&parent, &output, &subdivisionBuffer1, &subdivisionBuffer2, count + 1)
                 freeBuffers.append(parent)
                 continue
@@ -49,7 +44,7 @@ enum PathApproximation {
 
             // If we do not yet have a sufficiently "flat" (in other words, detailed) approximation we keep
             // subdividing the curve we are currently operating on.
-            var rightChild = freeBuffers.isEmpty ? [Vector2?](repeating: nil, count: count + 1) : freeBuffers.popLast()!
+            var rightChild = freeBuffers.isEmpty ? [Vector2?](repeating: nil, count: count + 1) : freeBuffers.removeLast()
             bezierSubdivide(&parent, &subdivisionBuffer2, &rightChild, &subdivisionBuffer1, count + 1)
 
             // We re-use the buffer of the parent for one of the children, so that we save one allocation per iteration.
@@ -57,9 +52,9 @@ enum PathApproximation {
                 parent[i] = subdivisionBuffer2[i]
             }
 
-            toFlatten.append(rightChild)
-            toFlatten.append(parent)
-        }
+            toFlatten.append((rightChild, depth + 1))
+            toFlatten.append((parent, depth + 1))
+        } }
 
         output.append(controlPoints[count])
         return output
