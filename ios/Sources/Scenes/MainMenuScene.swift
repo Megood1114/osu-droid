@@ -57,8 +57,11 @@ class MainMenuScene: SKScene {
 
         for node in nodes {
             if node.name == "playButton" || node.parent?.name == "playButton" {
-                // TODO: Transition to song select scene
-                print("[MainMenu] Play tapped — song select not yet implemented")
+                let songMenu = SongMenuScene(size: size)
+                songMenu.scaleMode = .aspectFill
+                let transition = SKTransition.push(with: .left, duration: 0.3)
+                view?.presentScene(songMenu, transition: transition)
+                return
             }
         }
     }
