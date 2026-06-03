@@ -230,7 +230,8 @@ enum PathApproximation {
         _ subdivisionBuffer2: inout [Vector2?],
         _ count: Int
     ) {
-        bezierSubdivide(&controlPoints, &subdivisionBuffer2, &subdivisionBuffer1, &subdivisionBuffer1, count)
+        var tempBuffer = subdivisionBuffer1
+        bezierSubdivide(&controlPoints, &subdivisionBuffer2, &subdivisionBuffer1, &tempBuffer, count)
 
         if count > 1 {
             // System.arraycopy(subdivisionBuffer1, 1, subdivisionBuffer2, count, count - 1)
