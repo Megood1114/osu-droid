@@ -26,9 +26,7 @@ targets:
     sources:
       - path: Sources
         type: group
-    resources:
       - path: Resources
-        type: group
     dependencies:
       - framework: Frameworks/bass.xcframework
         embed: true
