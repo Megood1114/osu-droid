@@ -68,10 +68,10 @@ open class Beatmap: IBeatmap {
         let adjustmentMods = mods?.compactMap { $0 as? IModFacilitatesAdjustment } ?? []
         
         mods?.compactMap { $0 as? IModRequiresBeatmapDifficulty }.forEach {
-            $0.applyFromBeatmapDifficulty(difficulty)
+            $0.applyFromBeatmapDifficulty(difficulty: difficulty)
         }
         
-        let converter = BeatmapConverter(self)
+        let converter = BeatmapConverter(beatmap: self)
         
         // Convert
         let converted = converter.convert()
@@ -79,11 +79,11 @@ open class Beatmap: IBeatmap {
         
         // Apply difficulty mods
         mods?.compactMap { $0 as? IModApplicableToDifficulty }.forEach {
-            $0.applyToDifficulty(mode, converted.difficulty, adjustmentMods)
+            $0.applyToDifficulty(mode: mode, difficulty: converted.difficulty, adjustmentMods: adjustmentMods)
         }
         
         mods?.compactMap { $0 as? IModApplicableToDifficultyWithMods }.forEach {
-            $0.applyToDifficulty(mode, converted.difficulty, mods ?? [])
+            $0.applyToDifficulty(mode: mode, difficulty: converted.difficulty, mods: mods ?? [])
         }
         
         let processor = BeatmapProcessor(converted)
@@ -92,25 +92,25 @@ open class Beatmap: IBeatmap {
         
         // Compute default values for hit objects, including creating nested hit objects in-case they're needed
         converted.hitObjects.objects.forEach {
-            $0.applyDefaults(converted.controlPoints, converted.difficulty, mode)
+            $0.applyDefaults(controlPoints: converted.controlPoints, difficulty: converted.difficulty, mode: mode)
         }
         
         mods?.compactMap { $0 as? IModApplicableToHitObject }.forEach { mod in
             for obj in converted.hitObjects.objects {
-                mod.applyToHitObject(mode, obj, adjustmentMods)
+                mod.applyToHitObject(mode: mode, hitObject: obj, adjustmentMods: adjustmentMods)
             }
         }
         
         mods?.compactMap { $0 as? IModApplicableToHitObjectWithMods }.forEach { mod in
             for obj in converted.hitObjects.objects {
-                mod.applyToHitObject(mode, obj, mods ?? [])
+                mod.applyToHitObject(mode: mode, hitObject: obj, mods: mods ?? [])
             }
         }
         
         processor.postProcess()
         
         mods?.compactMap { $0 as? IModApplicableToBeatmap }.forEach {
-            $0.applyToBeatmap(converted)
+            $0.applyToBeatmap(beatmap: converted)
         }
         
         return converted
