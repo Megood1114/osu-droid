@@ -12,7 +12,7 @@ open class Beatmap: IBeatmap {
     public var events: BeatmapEvents = BeatmapEvents()
     public var colors: BeatmapColor = BeatmapColor()
     public var controlPoints: BeatmapControlPoints = BeatmapControlPoints()
-    public var hitObjects: BeatmapHitObjects = BeatmapHitObjects()
+    var hitObjects: BeatmapHitObjects = BeatmapHitObjects()
     public var filePath: String = ""
     public var md5: String = ""
     

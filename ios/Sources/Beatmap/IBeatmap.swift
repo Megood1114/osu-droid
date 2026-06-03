@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents a beatmap.
-public protocol IBeatmap {
+protocol IBeatmap {
     /// The format version of this `IBeatmap`.
     var formatVersion: Int { get }
 

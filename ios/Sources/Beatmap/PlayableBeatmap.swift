@@ -15,7 +15,7 @@ open class PlayableBeatmap: IBeatmap {
     public var events: BeatmapEvents { baseBeatmap.events }
     public var colors: BeatmapColor { baseBeatmap.colors }
     public var controlPoints: BeatmapControlPoints { baseBeatmap.controlPoints }
-    public var hitObjects: BeatmapHitObjects { baseBeatmap.hitObjects }
+    var hitObjects: BeatmapHitObjects { baseBeatmap.hitObjects }
     public var filePath: String { baseBeatmap.filePath }
     public var md5: String { baseBeatmap.md5 }
     public var maxCombo: Int { baseBeatmap.maxCombo }
