@@ -3,29 +3,12 @@
 /**
  * Data class to allow serialization of [Mod]s.
  */
-public struct APIMod constructor(
-    /**
-     * The acronym of the [Mod].
-     */
-    let acronym: String,
+public struct APIMod {
+    let acronym: String
+    let settings: [String: Any]?
 
-    /**
-     * The settings of the [Mod], if any.
-     */
-    let settings: JsonObject? = null
-) {
-    /**
-     * Converts this [APIMod] to a [Mod].
-     *
-     * Returns `null` if [acronym] is not recognized.
-     */
-    func toMod(): Mod? {
-        let mod = ModUtils.allModsClassesByAcronym[acronym]?.createInstance() ?: return null
-
-        if (settings != null) {
-            mod.copySettings(settings)
-        }
-
-        return mod
+    public init(acronym: String, settings: [String: Any]? = nil) {
+        self.acronym = acronym
+        self.settings = settings
     }
 }
