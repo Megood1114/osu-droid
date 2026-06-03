@@ -1,22 +1,22 @@
 import Foundation
 
 /// Represents a beatmap.
-open class Beatmap: IBeatmap {
+class Beatmap: IBeatmap {
     /// The `GameMode` this `Beatmap` was parsed as.
     public private(set) var mode: GameMode
     
-    public var formatVersion: Int = 14
-    public var general: BeatmapGeneral = BeatmapGeneral()
-    public var metadata: BeatmapMetadata = BeatmapMetadata()
-    public var difficulty: BeatmapDifficulty = BeatmapDifficulty()
-    public var events: BeatmapEvents = BeatmapEvents()
-    public var colors: BeatmapColor = BeatmapColor()
-    public var controlPoints: BeatmapControlPoints = BeatmapControlPoints()
+    var formatVersion: Int = 14
+    var general: BeatmapGeneral = BeatmapGeneral()
+    var metadata: BeatmapMetadata = BeatmapMetadata()
+    var difficulty: BeatmapDifficulty = BeatmapDifficulty()
+    var events: BeatmapEvents = BeatmapEvents()
+    var colors: BeatmapColor = BeatmapColor()
+    var controlPoints: BeatmapControlPoints = BeatmapControlPoints()
     var hitObjects: BeatmapHitObjects = BeatmapHitObjects()
-    public var filePath: String = ""
-    public var md5: String = ""
+    var filePath: String = ""
+    var md5: String = ""
     
-    public lazy var maxCombo: Int = {
+    lazy var maxCombo: Int = {
         hitObjects.objects.reduce(0) { sum, obj in
             if let slider = obj as? Slider {
                 return sum + slider.nestedHitObjects.count
@@ -38,7 +38,7 @@ open class Beatmap: IBeatmap {
     /// - Parameters:
     ///   - mods: The `Mod`s to apply to the `Beatmap`. Defaults to `nil`.
     /// - Returns: The `DroidPlayableBeatmap`.
-    public func createDroidPlayableBeatmap(mods: [Mod]? = nil) -> DroidPlayableBeatmap {
+    func createDroidPlayableBeatmap(mods: [Mod]? = nil) -> DroidPlayableBeatmap {
         return DroidPlayableBeatmap(baseBeatmap: convert(mode: .droid, mods: mods), mods: mods)
     }
     
@@ -48,7 +48,7 @@ open class Beatmap: IBeatmap {
     /// - Parameters:
     ///   - mods: The `Mod`s to apply to the `Beatmap`. Defaults to `nil`.
     /// - Returns: The `StandardPlayableBeatmap`.
-    public func createStandardPlayableBeatmap(mods: [Mod]? = nil) -> StandardPlayableBeatmap {
+    func createStandardPlayableBeatmap(mods: [Mod]? = nil) -> StandardPlayableBeatmap {
         return StandardPlayableBeatmap(baseBeatmap: convert(mode: .standard, mods: mods), mods: mods)
     }
     
@@ -59,7 +59,7 @@ open class Beatmap: IBeatmap {
     ///   - mode: The `GameMode` to convert the `Beatmap` to.
     ///   - mods: The `Mod`s to apply to the `Beatmap`. Defaults to `nil`.
     /// - Returns: The converted `Beatmap`.
-    public func convert(mode: GameMode, mods: [Mod]? = nil) -> Beatmap {
+    func convert(mode: GameMode, mods: [Mod]? = nil) -> Beatmap {
         if self.mode == mode && (mods?.first == nil) {
             // Beatmap is already playable as is.
             return self
@@ -117,7 +117,7 @@ open class Beatmap: IBeatmap {
     }
     
     /// Creates a clone of this `Beatmap`.
-    public func clone() -> Beatmap {
+    func clone() -> Beatmap {
         let copy = Beatmap(mode: self.mode)
         copy.formatVersion = self.formatVersion
         copy.general = self.general

@@ -58,7 +58,7 @@ protocol IBeatmap {
     func getOffsetTime(time: Int) -> Int
 }
 
-public extension IBeatmap {
+extension IBeatmap {
     var beatmapsetPath: String {
         guard let lastSlashIndex = filePath.lastIndex(of: "/") else { return filePath }
         return String(filePath[..<lastSlashIndex])

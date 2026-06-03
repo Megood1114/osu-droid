@@ -1,14 +1,14 @@
 import Foundation
 
 /// Provides functionality to alter an `IBeatmap` after it has been converted.
-public class BeatmapProcessor {
+class BeatmapProcessor {
     private static let stackDistance: Int = 3
     private static let stackDistanceSquared: Float = Float(stackDistance * stackDistance)
 
     /// The `IBeatmap` to process. This should already be converted to the applicable mode.
-    public let beatmap: IBeatmap
+    let beatmap: IBeatmap
 
-    public init(beatmap: IBeatmap) {
+    init(beatmap: IBeatmap) {
         self.beatmap = beatmap
     }
 
@@ -18,7 +18,7 @@ public class BeatmapProcessor {
     /// and no `Mod`s will have been applied to the `HitObject`s.
     ///
     /// This can only be used to add alterations to `HitObject`s generated directly through the conversion process.
-    public func preProcess() {
+    func preProcess() {
         var lastObj: HitObject? = nil
 
         for obj in beatmap.hitObjects.objects {
@@ -38,7 +38,7 @@ public class BeatmapProcessor {
     /// and `Mod`s will have been applied to all `HitObject`s.
     ///
     /// This should be used to add alterations to `HitObject`s while they are in their most playable state.
-    public func postProcess() {
+    func postProcess() {
         let hitObjects = beatmap.hitObjects
         if hitObjects.objects.isEmpty {
             return
