@@ -146,6 +146,6 @@ class BassSoundProvider {
         }
         
         BASS_ChannelSetAttribute(channel, DWORD(BASS_ATTRIB_VOL), volume * AppConfig.soundVolume)
-        BASS_ChannelSetAttribute(channel, DWORD(BASS_ATTRIB_FREQ), sampleInfo.freq * frequency)
+        BASS_ChannelSetAttribute(channel, DWORD(BASS_ATTRIB_FREQ), Float(sampleInfo.freq) * frequency)
     }
 }
