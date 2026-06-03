@@ -5,10 +5,12 @@ on:
     branches: [master, develop]
     paths:
       - 'ios/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [master]
     paths:
       - 'ios/**'
+      - '.github/workflows/**'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
