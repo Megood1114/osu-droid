@@ -147,10 +147,15 @@ enum PathApproximation {
         if 2 * radius <= circularArcTolerance {
             amountPoints = 2
         } else {
-            amountPoints = max(
-                2,
-                Int(ceil(thetaRange / (2 * acos(1 - Double(circularArcTolerance) / Double(radius)))))
-            )
+            let angleStep = 2 * acos(1 - Double(circularArcTolerance) / Double(radius))
+            if angleStep.isNaN || angleStep < 1e-5 {
+                // If radius is extremely large, the curve is essentially linear.
+                amountPoints = 2
+            } else {
+                let calculatedPoints = Int(ceil(thetaRange / angleStep))
+                // Cap to prevent memory explosion if the radius is unexpectedly huge
+                amountPoints = min(10000, max(2, calculatedPoints))
+            }
         }
 
         var output = [Vector2]()
