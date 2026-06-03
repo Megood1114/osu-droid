@@ -1,3 +1,4 @@
+#import <Foundation/Foundation.h>
 //
 //  osu-droid-Bridging-Header.h
 //  osu!droid
