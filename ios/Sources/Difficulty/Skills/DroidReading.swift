@@ -45,7 +45,7 @@ public final class DroidReading: Skill<DroidDifficultyHitObject> {
         }
 
         for i in 0..<min(peaks.count, reducedCount) {
-            peaks[i] *= log10(Interpolation.linear(1.0, 10.0, max(0.0, min(1.0, Double(i) / Double(reducedCount)))))
+            peaks[i] *= log10(Interpolation.linear(start: 1.0, end: 10.0, amount: max(0.0, min(1.0, Double(i) / Double(reducedCount)))))
         }
 
         peaks.sort(by: >)

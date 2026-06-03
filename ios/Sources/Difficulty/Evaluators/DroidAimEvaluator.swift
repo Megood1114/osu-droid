@@ -28,8 +28,8 @@ public final class DroidAimEvaluator {
         let lastLast = current.previous(1)!
         let last2 = current.previous(2)
 
-        let radius = DifficultyHitObject.NORMALIZED_RADIUS
-        let diameter = DifficultyHitObject.NORMALIZED_DIAMETER
+        let radius = Double(DifficultyHitObject.normalizedRadius)
+        let diameter = Double(DifficultyHitObject.normalizedDiameter)
 
         var currentVelocity = current.lazyJumpDistance / current.strainTime
 

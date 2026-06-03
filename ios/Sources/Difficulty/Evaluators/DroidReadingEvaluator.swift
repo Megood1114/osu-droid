@@ -3,7 +3,7 @@ import Foundation
 public final class DroidReadingEvaluator {
     private static let EMPTY_MODS: [Mod] = []
     private static let READING_WINDOW_SIZE = 3000.0
-    private static let DISTANCE_INFLUENCE_THRESHOLD = DifficultyHitObject.NORMALIZED_DIAMETER * 1.25
+    private static let DISTANCE_INFLUENCE_THRESHOLD = Double(DifficultyHitObject.normalizedDiameter) * 1.25
     private static let HIDDEN_MULTIPLIER = 0.5
     private static let DENSITY_MULTIPLIER = 0.8
     private static let DENSITY_DIFFICULTY_BASE = 1.5
@@ -11,7 +11,7 @@ public final class DroidReadingEvaluator {
     private static let PREEMPT_STARTING_POINT = 475.0
 
     public static func evaluateDifficultyOf(current: DroidDifficultyHitObject, clockRate: Double, mods: [Mod]) -> Double {
-        if current.obj is Spinner || current.isOverlapping(true) || current.index <= 0 {
+        if current.obj is Spinner || current.isOverlapping(considerDistance: true) || current.index <= 0 {
             return 0.0
         }
 
@@ -21,9 +21,9 @@ public final class DroidReadingEvaluator {
         var pastObjectDifficultyInfluence = 0.0
 
         for prev in retrievePastVisibleObjects(current: current) {
-            var prevDifficulty = current.opacityAt(prev.obj.startTime, EMPTY_MODS)
+            var prevDifficulty = current.opacityAt(time: prev.obj.startTime, mods: EMPTY_MODS)
 
-            prevDifficulty *= DifficultyCalculationUtils.smootherstep(prev.lazyJumpDistance, 15.0, DISTANCE_INFLUENCE_THRESHOLD)
+            prevDifficulty *= DifficultyCalculationUtils.smootherstep(x: prev.lazyJumpDistance, start: 15.0, end: DISTANCE_INFLUENCE_THRESHOLD)
             prevDifficulty *= getTimeNerfFactor(deltaTime: current.startTime - prev.startTime)
 
             pastObjectDifficultyInfluence += prevDifficulty
@@ -48,7 +48,7 @@ public final class DroidReadingEvaluator {
             let prev = current.previous(0) as! DroidDifficultyHitObject
 
             if current.lazyJumpDistance == 0.0 &&
-                current.opacityAt(prev.obj.startTime + prev.timePreempt, mods) == 0.0 &&
+                current.opacityAt(time: prev.obj.startTime + prev.timePreempt, mods: mods) == 0.0 &&
                 prev.startTime + prev.timePreempt > current.startTime {
                 hiddenDifficulty += (HIDDEN_MULTIPLIER * 1303.0) / pow(current.strainTime, 1.5)
             }
@@ -106,7 +106,7 @@ public final class DroidReadingEvaluator {
                 break
             }
 
-            if prev.isOverlapping(true) {
+            if prev.isOverlapping(considerDistance: true) {
                 continue
             }
 
@@ -128,14 +128,14 @@ public final class DroidReadingEvaluator {
                 break
             }
 
-            if next.isOverlapping(true) {
+            if next.isOverlapping(considerDistance: true) {
                 nextObj = next.next(0) as? DroidDifficultyHitObject
                 continue
             }
 
             let timeNerfFactor = getTimeNerfFactor(deltaTime: timeDifference)
 
-            visibleObjectCount += next.opacityAt(current.obj.startTime, EMPTY_MODS) * timeNerfFactor
+            visibleObjectCount += next.opacityAt(time: current.obj.startTime, mods: EMPTY_MODS) * timeNerfFactor
 
             nextObj = next.next(0) as? DroidDifficultyHitObject
         }

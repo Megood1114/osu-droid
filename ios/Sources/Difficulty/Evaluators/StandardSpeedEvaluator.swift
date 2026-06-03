@@ -1,7 +1,7 @@
 import Foundation
 
 public final class StandardSpeedEvaluator {
-    private static let SINGLE_SPACING_THRESHOLD = DifficultyHitObject.NORMALIZED_DIAMETER * 1.25
+    private static let SINGLE_SPACING_THRESHOLD = Double(DifficultyHitObject.normalizedDiameter) * 1.25
     private static let MIN_SPEED_BONUS = 75.0
     private static let DISTANCE_MULTIPLIER = 0.8
 
