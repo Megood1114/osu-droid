@@ -1,0 +1,16 @@
+import Foundation
+
+/// Represents a `PlayableBeatmap` for `GameMode.droid` game mode.
+public class DroidPlayableBeatmap: PlayableBeatmap {
+    public init(baseBeatmap: IBeatmap, mods: [Mod]? = nil) {
+        super.init(baseBeatmap: baseBeatmap, mode: .droid, mods: mods)
+    }
+    
+    public override func createHitWindow() -> HitWindow {
+        if mods.contains(where: { $0 is ModPrecise }) {
+            return PreciseDroidHitWindow(difficulty.od)
+        } else {
+            return DroidHitWindow(difficulty.od)
+        }
+    }
+}

@@ -1,0 +1,104 @@
+name: osu-droid-ios
+options:
+  bundleIdPrefix: com.osudroid
+  deploymentTarget:
+    iOS: "15.0"
+  xcodeVersion: "15.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+    TARGETED_DEVICE_FAMILY: "1,2" # iPhone and iPad
+    SUPPORTS_MACCATALYST: false
+    CODE_SIGNING_ALLOWED: false
+    CODE_SIGNING_REQUIRED: false
+    CODE_SIGN_IDENTITY: ""
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  osu-droid-ios:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+        type: group
+    resources:
+      - path: Resources
+        type: group
+    dependencies:
+      - framework: Frameworks/bass.xcframework
+        embed: true
+      - framework: Frameworks/bassmix.xcframework
+        embed: true
+      - sdk: SpriteKit.framework
+      - sdk: Metal.framework
+      - sdk: MetalKit.framework
+      - sdk: AVFoundation.framework
+      - sdk: AudioToolbox.framework
+      - sdk: GameController.framework
+      - sdk: CoreHaptics.framework
+      - sdk: UIKit.framework
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.osudroid.ios
+        INFOPLIST_FILE: Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        PRODUCT_NAME: "osu!droid"
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited)"
+        # Unsigned build settings for sideloading
+        CODE_SIGNING_ALLOWED: false
+        CODE_SIGNING_REQUIRED: false
+        CODE_SIGN_IDENTITY: ""
+        DEVELOPMENT_TEAM: ""
+        # Framework search path for BASS
+        FRAMEWORK_SEARCH_PATHS:
+          - "$(PROJECT_DIR)/Frameworks"
+        HEADER_SEARCH_PATHS:
+          - "$(PROJECT_DIR)/Frameworks"
+        SWIFT_OBJC_BRIDGING_HEADER: "Sources/osu-droid-Bridging-Header.h"
+        # Metal shader compilation
+        MTL_HEADER_SEARCH_PATHS: "$(PROJECT_DIR)/Sources/Rendering/Shaders"
+      configs:
+        Debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) DEBUG"
+          ENABLE_TESTABILITY: true
+        Release:
+          SWIFT_OPTIMIZATION_LEVEL: "-O"
+          SWIFT_COMPILATION_MODE: wholemodule
+
+  osu-droid-tests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+        type: group
+    dependencies:
+      - target: osu-droid-ios
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.osudroid.ios.tests
+        CODE_SIGNING_ALLOWED: false
+        CODE_SIGNING_REQUIRED: false
+        CODE_SIGN_IDENTITY: ""
+
+schemes:
+  osu-droid-ios:
+    build:
+      targets:
+        osu-droid-ios: all
+        osu-droid-tests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - osu-droid-tests
+    archive:
+      config: Release
