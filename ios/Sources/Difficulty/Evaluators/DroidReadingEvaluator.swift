@@ -77,7 +77,7 @@ public final class DroidReadingEvaluator {
 
                 cumulativeStrainTime += last.strainTime
 
-                if !(last.obj is Slider) || last.isOverlapping(true) {
+                if !(last.obj is Slider) || last.isOverlapping(considerDistance: true) {
                     continue
                 }
 

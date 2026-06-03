@@ -52,7 +52,7 @@ public enum DifficultyCalculationUtils {
     ///   - end: The `x` value at which the function returns 1.
     /// - Returns: The output of the smoothstep function calculated at `x`.
     public static func smoothstep(x: Double, start: Double, end: Double) -> Double {
-        let t = Interpolation.reverseLinear(x, start, end)
+        let t = Interpolation.reverseLinear(x: x, start: start, end: end)
         return t * t * (3.0 - 2.0 * t)
     }
 
@@ -64,7 +64,7 @@ public enum DifficultyCalculationUtils {
     ///   - end: The `x` value at which the function returns 1.
     /// - Returns: The output of the smootherstep function calculated at `x`.
     public static func smootherstep(x: Double, start: Double, end: Double) -> Double {
-        let t = Interpolation.reverseLinear(x, start, end)
+        let t = Interpolation.reverseLinear(x: x, start: start, end: end)
         return t * t * t * (t * (t * 6.0 - 15.0) + 10.0)
     }
 

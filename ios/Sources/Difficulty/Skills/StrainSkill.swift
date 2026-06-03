@@ -90,9 +90,9 @@ open class StrainSkill<TObject: DifficultyHitObject>: Skill<TObject> {
                 continue
             }
 
-            let scale = log10(Interpolation.linear(1.0, 10.0, Double(i) / Double(reducedSectionCount)))
+            let scale = log10(Interpolation.linear(start: 1.0, end: 10.0, amount: Double(i) / Double(reducedSectionCount)))
 
-            strainPeaks[index] *= Interpolation.linear(reducedSectionBaseline, 1.0, scale)
+            strainPeaks[index] *= Interpolation.linear(start: reducedSectionBaseline, end: 1.0, amount: scale)
         }
     }
 

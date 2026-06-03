@@ -12,7 +12,7 @@ public final class DroidAimEvaluator {
     private static let MIN_SPEED_BONUS = 75.0
 
     public static func evaluateDifficultyOf(current: DroidDifficultyHitObject, withSliders: Bool) -> Double {
-        if current.obj is Spinner || current.isOverlapping(true) {
+        if current.obj is Spinner || current.isOverlapping(considerDistance: true) {
             return 0.0
         }
 
@@ -62,26 +62,26 @@ public final class DroidAimEvaluator {
                 acuteAngleBonus = calculateAcuteAngleBonus(angle: currentAngle)
                 acuteAngleBonus *= 0.08 + 0.92 * (1.0 - min(acuteAngleBonus, pow(calculateAcuteAngleBonus(angle: lastAngle), 3.0)))
                 acuteAngleBonus *= angleBonus *
-                    DifficultyCalculationUtils.smootherstep(DifficultyCalculationUtils.millisecondsToBPM(current.strainTime, 2), 300.0, 400.0) *
-                    DifficultyCalculationUtils.smootherstep(current.lazyJumpDistance, diameter, diameter * 2.0)
+                    DifficultyCalculationUtils.smootherstep(x: DifficultyCalculationUtils.millisecondsToBPM(current.strainTime, 2), start: 300.0, end: 400.0) *
+                    DifficultyCalculationUtils.smootherstep(x: current.lazyJumpDistance, start: diameter, end: diameter * 2.0)
             }
 
             wideAngleBonus = calculateWideAngleBonus(angle: currentAngle)
             wideAngleBonus *= 1.0 - min(wideAngleBonus, pow(calculateWideAngleBonus(angle: lastAngle), 3.0))
-            wideAngleBonus *= angleBonus * DifficultyCalculationUtils.smootherstep(current.lazyJumpDistance, 0.0, diameter)
+            wideAngleBonus *= angleBonus * DifficultyCalculationUtils.smootherstep(x: current.lazyJumpDistance, start: 0.0, end: diameter)
 
             wiggleBonus = angleBonus *
-                DifficultyCalculationUtils.smootherstep(current.lazyJumpDistance, radius, diameter) *
-                pow(Interpolation.reverseLinear(current.lazyJumpDistance, diameter * 3.0, diameter), 1.8) *
-                DifficultyCalculationUtils.smootherstep(currentAngle, 110.0.toRadians(), 60.0.toRadians()) *
-                DifficultyCalculationUtils.smootherstep(last.lazyJumpDistance, radius, diameter) *
-                pow(Interpolation.reverseLinear(last.lazyJumpDistance, diameter * 3.0, diameter), 1.8) *
-                DifficultyCalculationUtils.smootherstep(lastAngle, 110.0.toRadians(), 60.0.toRadians())
+                DifficultyCalculationUtils.smootherstep(x: current.lazyJumpDistance, start: radius, end: diameter) *
+                pow(Interpolation.reverseLinear(x: current.lazyJumpDistance, start: diameter * 3.0, end: diameter), 1.8) *
+                DifficultyCalculationUtils.smootherstep(x: currentAngle, start: 110.0.toRadians(), end: 60.0.toRadians()) *
+                DifficultyCalculationUtils.smootherstep(x: last.lazyJumpDistance, start: radius, end: diameter) *
+                pow(Interpolation.reverseLinear(x: last.lazyJumpDistance, start: diameter * 3.0, end: diameter), 1.8) *
+                DifficultyCalculationUtils.smootherstep(x: lastAngle, start: 110.0.toRadians(), end: 60.0.toRadians())
 
             if let last2 = last2 {
-                let distanceSquared = last2.obj.difficultyStackedPosition.getDistanceSquared(last.obj.difficultyStackedPosition)
+                let distanceSquared = Double(last2.obj.difficultyStackedPosition.getDistanceSquared(last.obj.difficultyStackedPosition))
                 if distanceSquared < 1.0 {
-                    let distance = sqrt(Double(distanceSquared))
+                    let distance = sqrt(distanceSquared)
                     wideAngleBonus *= 1.0 - 0.35 * (1.0 - distance)
                 }
             }
@@ -91,10 +91,8 @@ public final class DroidAimEvaluator {
             prevVelocity = (last.lazyJumpDistance + lastLast.travelDistance) / last.strainTime
             currentVelocity = (current.lazyJumpDistance + last.travelDistance) / current.strainTime
 
-            let distanceRatio = DifficultyCalculationUtils.smoothstep(
-                abs(prevVelocity - currentVelocity) / max(prevVelocity, currentVelocity),
-                0.0,
-                1.0
+            let distanceRatio = DifficultyCalculationUtils.smoothstep(x: 
+                abs(prevVelocity - currentVelocity) / max(prevVelocity, currentVelocity), start: 0.0, end: 1.0
             )
 
             let overlapVelocityBuff = min(125.0 / min(current.strainTime, last.strainTime), abs(prevVelocity - currentVelocity))
@@ -132,10 +130,10 @@ public final class DroidAimEvaluator {
     }
 
     private static func calculateWideAngleBonus(angle: Double) -> Double {
-        return DifficultyCalculationUtils.smoothstep(angle, 40.0.toRadians(), 140.0.toRadians())
+        return DifficultyCalculationUtils.smoothstep(x: angle, start: 40.0.toRadians(), end: 140.0.toRadians())
     }
 
     private static func calculateAcuteAngleBonus(angle: Double) -> Double {
-        return DifficultyCalculationUtils.smoothstep(angle, 140.0.toRadians(), 40.0.toRadians())
+        return DifficultyCalculationUtils.smoothstep(x: angle, start: 140.0.toRadians(), end: 40.0.toRadians())
     }
 }

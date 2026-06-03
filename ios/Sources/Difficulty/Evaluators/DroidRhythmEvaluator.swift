@@ -28,7 +28,7 @@ public final class DroidRhythmEvaluator {
 
         for i in 0..<historicalNoteCount {
             if let prev = current.previous(i) as? DroidDifficultyHitObject {
-                if !prev.isOverlapping(false) {
+                if !prev.isOverlapping(considerDistance: false) {
                     validPrevious.append(prev)
                 }
             } else {

@@ -10,7 +10,7 @@ public final class DroidFlashlightEvaluator {
     private static let MIN_ANGLE_MULTIPLIER = 0.2
 
     public static func evaluateDifficultyOf(current: DroidDifficultyHitObject, mods: [Mod], withSliders: Bool) -> Double {
-        if current.obj is Spinner || current.isOverlapping(true) {
+        if current.obj is Spinner || current.isOverlapping(considerDistance: true) {
             return 0.0
         }
 
@@ -26,14 +26,14 @@ public final class DroidFlashlightEvaluator {
             cumulativeStrainTime += last.strainTime
 
             if !(currentObject.obj is Spinner) {
-                let jumpDistance = current.obj.difficultyStackedPosition.getDistance(currentObject.obj.difficultyStackedEndPosition)
+                let jumpDistance = Double(current.obj.difficultyStackedPosition.getDistance(currentObject.obj.difficultyStackedEndPosition))
 
                 if i == 0 {
                     smallDistNerf = min(1.0, jumpDistance / 75.0)
                 }
 
                 let stackNerf = min(1.0, currentObject.lazyJumpDistance / scalingFactor / 25.0)
-                let opacityBonus = 1.0 + MAX_OPACITY_BONUS * (1.0 - current.opacityAt(currentObject.obj.startTime, mods))
+                let opacityBonus = 1.0 + MAX_OPACITY_BONUS * (1.0 - current.opacityAt(time: currentObject.obj.startTime, mods: mods))
                 
                 result += stackNerf * opacityBonus * scalingFactor * jumpDistance / cumulativeStrainTime
 

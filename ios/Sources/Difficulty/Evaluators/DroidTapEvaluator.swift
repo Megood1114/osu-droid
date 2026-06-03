@@ -8,7 +8,7 @@ public final class DroidTapEvaluator {
         considerCheesability: Bool,
         strainTimeCap: Double? = nil
     ) -> Double {
-        if current.obj is Spinner || current.isOverlapping(false) {
+        if current.obj is Spinner || current.isOverlapping(considerDistance: false) {
             return 0.0
         }
 
