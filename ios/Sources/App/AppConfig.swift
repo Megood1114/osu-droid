@@ -158,6 +158,10 @@ struct AppConfig {
         freopen(logFileURL.path.cString(using: .utf8), "w", stdout)
         freopen(logFileURL.path.cString(using: .utf8), "w", stderr)
         
+        // Disable buffering to ensure hard crashes are written immediately
+        setvbuf(stdout, nil, _IONBF, 0)
+        setvbuf(stderr, nil, _IONBF, 0)
+        
         print("==========================================")
         print("[Logger] osu!droid iOS Log Started")
         print("[Logger] Date: \\(Date())")
