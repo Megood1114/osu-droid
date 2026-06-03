@@ -3,7 +3,7 @@ import Foundation
 /// Contains information about hit objects of a beatmap.
 open class BeatmapHitObjects: Sequence {
     /// All objects in this beatmap.
-    public var objects: [HitObject] = []
+    var objects: [HitObject] = []
 
     /// The amount of circles in this beatmap.
     public private(set) var circleCount: Int = 0
@@ -25,14 +25,14 @@ open class BeatmapHitObjects: Sequence {
     /// Adds hit objects to this beatmap.
     ///
     /// - Parameter objects: The hit objects to add.
-    open func add(_ newObjects: [HitObject]) {
+    func add(_ newObjects: [HitObject]) {
         newObjects.forEach { add($0) }
     }
 
     /// Adds a hit object to this beatmap.
     ///
     /// - Parameter obj: The hit object to add.
-    open func add(_ obj: HitObject) {
+    func add(_ obj: HitObject) {
         // Objects may be out of order *only* if a user has manually edited an .osu file.
         // Finding index is used to guarantee that the parsing order of hit objects with equal start times is maintained (stably-sorted).
         objects.insert(obj, at: findInsertionIndex(startTime: obj.startTime))
@@ -51,7 +51,7 @@ open class BeatmapHitObjects: Sequence {
     ///
     /// - Parameter obj: The hit object to remove.
     /// - Returns: Whether the hit object was successfully removed.
-    open func remove(_ obj: HitObject) -> Bool {
+    func remove(_ obj: HitObject) -> Bool {
         if let index = objects.firstIndex(where: { $0 === obj }) {
             objects.remove(at: index)
             
@@ -73,7 +73,7 @@ open class BeatmapHitObjects: Sequence {
     ///
     /// - Parameter index: The index of the hit object to remove.
     /// - Returns: The hit object that was removed, `nil` if no hit objects were removed.
-    open func remove(at index: Int) -> HitObject? {
+    func remove(at index: Int) -> HitObject? {
         if index < 0 || index >= objects.count {
             return nil
         }
@@ -129,7 +129,7 @@ open class BeatmapHitObjects: Sequence {
         return l
     }
 
-    public func makeIterator() -> IndexingIterator<[HitObject]> {
+    func makeIterator() -> IndexingIterator<[HitObject]> {
         return objects.makeIterator()
     }
 }

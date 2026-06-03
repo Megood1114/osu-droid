@@ -14,10 +14,10 @@ public struct BeatmapGeneral {
     public var previewTime: Int = -1
 
     /// The speed of the countdown before the first hit object.
-    public var countdown: BeatmapCountdown = .normal
+    var countdown: BeatmapCountdown = .normal
 
     /// The sample bank that will be used if timing points do not override it.
-    public var sampleBank: SampleBank = .normal
+    var sampleBank: SampleBank = .normal
 
     /// The sample volume that will be used if timing points do not override it.
     public var sampleVolume: Int = 100

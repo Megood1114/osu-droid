@@ -334,7 +334,7 @@ class HitObject {
             endTime + Double(HitObject.controlPointLeniency)
         )
 
-        samples = samples.map { sampleControlPoint.applyTo($0) }
+        samples = samples.map { sampleControlPoint.applyTo(hitSampleInfo: $0) }
     }
 
     /// Given the previous `HitObject` in the beatmap, update relevant combo information.

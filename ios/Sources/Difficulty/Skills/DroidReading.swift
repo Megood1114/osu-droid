@@ -14,7 +14,7 @@ public final class DroidReading: Skill<DroidDifficultyHitObject> {
     private let clockRate: Double
     private let hitObjects: [HitObject]
 
-    public init(mods: [Mod], clockRate: Double, hitObjects: [HitObject]) {
+    init(mods: [Mod], clockRate: Double, hitObjects: [HitObject]) {
         self.clockRate = clockRate
         self.hitObjects = hitObjects
         super.init(mods: mods)

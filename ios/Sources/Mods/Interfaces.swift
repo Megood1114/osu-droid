@@ -44,11 +44,11 @@ public protocol IModApplicableToDifficultyWithMods {
     func applyToDifficulty(mode: GameMode, difficulty: BeatmapDifficulty, mods: [Mod])
 }
 
-public protocol IModApplicableToHitObject {
+protocol IModApplicableToHitObject {
     func applyToHitObject(mode: GameMode, hitObject: HitObject, adjustmentMods: [IModFacilitatesAdjustment])
 }
 
-public protocol IModApplicableToHitObjectWithMods {
+protocol IModApplicableToHitObjectWithMods {
     func applyToHitObject(mode: GameMode, hitObject: HitObject, mods: [Mod])
 }
 

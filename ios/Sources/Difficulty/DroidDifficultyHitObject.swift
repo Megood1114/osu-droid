@@ -85,7 +85,7 @@ public class DroidDifficultyHitObject: DifficultyHitObject {
             let threshold = 2.0 * obj.difficultyRadius
             let thresholdSquared = threshold * threshold
 
-            return distanceSquared <= thresholdSquared
+            return Double(distanceSquared) <= thresholdSquared
         }
 
         return true

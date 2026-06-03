@@ -12,10 +12,10 @@ public class BeatmapEvents {
     public var videoStartTime: Int = 0
 
     /// The breaks this beatmap has.
-    public var breaks: [BreakPeriod] = []
+    var breaks: [BreakPeriod] = []
 
     /// The background color of this beatmap.
-    public var backgroundColor: Color4? = nil
+    var backgroundColor: Color4? = nil
     
     public init() {}
 }

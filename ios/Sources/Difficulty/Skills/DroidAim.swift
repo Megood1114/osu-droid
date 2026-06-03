@@ -36,7 +36,7 @@ public final class DroidAim: DroidStrainSkill {
         let velocity = current.travelDistance / current.travelTime
 
         if velocity > 0 {
-            sliderVelocities.append(DifficultSlider(index: current.index + 1, velocity: velocity))
+            sliderVelocities.append(DifficultSlider(index: current.index + 1, difficultyRating: velocity))
         }
 
         if current.obj is Slider {

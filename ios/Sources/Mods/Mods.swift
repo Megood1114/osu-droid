@@ -67,7 +67,7 @@ public class ModDifficultyAdjust: Mod, IModApplicableToDifficultyWithMods, IModA
     }
     
     public func applyToDifficulty(mode: GameMode, difficulty: BeatmapDifficulty, mods: [Mod]) {}
-    public func applyToHitObject(mode: GameMode, hitObject: HitObject, mods: [Mod]) {}
+    func applyToHitObject(mode: GameMode, hitObject: HitObject, mods: [Mod]) {}
     public func applyFromBeatmapDifficulty(difficulty: BeatmapDifficulty) {}
 }
 
@@ -137,6 +137,9 @@ open class ModWithVisibilityAdjustment: Mod {
 }
 
 public class ModHidden: ModWithVisibilityAdjustment {
+    /// The multiplier applied to the fade out duration of hit objects.
+    public static let fadeOutDurationMultiplier: Double = 0.3
+
     public override var name: String { "Hidden" }
     public override var acronym: String { "HD" }
     public override var description: String { "Play with no approach circles and fading circles/sliders." }

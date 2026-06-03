@@ -427,8 +427,8 @@ class Slider: HitObject {
         }
 
         let samplePoints = controlPoints.sample.between(
-            startTime + Double(HitObject.controlPointLeniency),
-            endTime + Double(HitObject.controlPointLeniency)
+            start: startTime + Double(HitObject.controlPointLeniency),
+            end: endTime + Double(HitObject.controlPointLeniency)
         )
 
         if normalSlide != nil {

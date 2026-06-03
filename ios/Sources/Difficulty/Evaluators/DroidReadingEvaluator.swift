@@ -147,7 +147,7 @@ public final class DroidReadingEvaluator {
         let obj = current.obj
 
         let fadeOutStartTime = obj.startTime - obj.timePreempt + obj.timeFadeIn
-        let fadeOutDuration = obj.timePreempt * ModHidden.FADE_OUT_DURATION_MULTIPLIER
+        let fadeOutDuration = obj.timePreempt * ModHidden.fadeOutDurationMultiplier
 
         return fadeOutStartTime + fadeOutDuration - (obj.startTime - obj.timePreempt)
     }

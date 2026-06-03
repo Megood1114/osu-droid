@@ -17,7 +17,7 @@ public final class Island: Hashable, Equatable {
     
     func addDelta(delta: Int) {
         if self.delta == Int.max {
-            self.delta = max(delta, DifficultyHitObject.MIN_DELTA_TIME)
+            self.delta = max(delta, Int(DifficultyHitObject.minDeltaTime))
         }
         
         self.deltaCount += 1

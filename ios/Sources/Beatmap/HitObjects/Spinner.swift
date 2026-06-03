@@ -51,21 +51,21 @@ class Spinner: HitObject {
         super.applySamples(controlPoints: controlPoints)
 
         let samplePoints = controlPoints.sample.between(
-            startTime + Double(HitObject.controlPointLeniency),
-            endTime + Double(HitObject.controlPointLeniency)
+            start: startTime + Double(HitObject.controlPointLeniency),
+            end: endTime + Double(HitObject.controlPointLeniency)
         )
 
         auxiliarySamples.removeAll()
 
         auxiliarySamples.append(SequenceHitSampleInfo(
             samples: samplePoints.map { point in
-                (point.time, point.applyTo(Spinner.baseSpinnerSpinSample))
+                (point.time, point.applyTo(hitSampleInfo: Spinner.baseSpinnerSpinSample))
             }
         ))
 
         auxiliarySamples.append(SequenceHitSampleInfo(
             samples: samplePoints.map { point in
-                (point.time, point.applyTo(Spinner.baseSpinnerBonusSample))
+                (point.time, point.applyTo(hitSampleInfo: Spinner.baseSpinnerBonusSample))
             }
         ))
     }

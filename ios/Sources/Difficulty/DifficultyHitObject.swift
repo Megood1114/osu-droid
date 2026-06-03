@@ -12,7 +12,7 @@ open class DifficultyHitObject {
     public static let minDeltaTime: Double = 25.0
 
     /// The HitObject that this DifficultyHitObject wraps.
-    public let obj: HitObject
+    let obj: HitObject
 
     /// The HitObject that occurs before `obj`.
     private let lastObj: HitObject?
@@ -29,7 +29,7 @@ open class DifficultyHitObject {
     public var minimumJumpTime: Double = DifficultyHitObject.minDeltaTime
     public var travelDistance: Double = 0.0
     public var travelTime: Double = DifficultyHitObject.minDeltaTime
-    public var lazyEndPosition: Vector2? = nil
+    var lazyEndPosition: Vector2? = nil
     public var lazyTravelDistance: Double = 0.0
     public var lazyTravelTime: Double = 0.0
     public var angle: Double? = nil
@@ -64,7 +64,7 @@ open class DifficultyHitObject {
         return previous(1)
     }
 
-    public init(
+    init(
         obj: HitObject,
         lastObj: HitObject?,
         clockRate: Double,
@@ -162,7 +162,7 @@ open class DifficultyHitObject {
 
         guard let lastObj = lastObj else { return }
 
-        let scalingFactor = DifficultyHitObject.normalizedRadius / obj.difficultyRadius
+        let scalingFactor = DifficultyHitObject.normalizedRadius / Float(obj.difficultyRadius)
 
         let lastCursorPosition: Vector2
         if let lastDifficultyObject = lastDifficultyObject {
@@ -179,7 +179,7 @@ open class DifficultyHitObject {
             let lastTravelTime = max(lastDifficultyObject.lazyTravelTime / clockRate, DifficultyHitObject.minDeltaTime)
             minimumJumpTime = max(strainTime - lastTravelTime, DifficultyHitObject.minDeltaTime)
 
-            let tailJumpDistance = Double((lastObj.tail.difficultyStackedPosition - obj.difficultyStackedPosition).length * scalingFactor)
+            let tailJumpDistance = Double(((lastObj as! Slider).tail.difficultyStackedPosition - obj.difficultyStackedPosition).length * scalingFactor)
 
             minimumJumpDistance = max(
                 0.0,
@@ -255,7 +255,7 @@ open class DifficultyHitObject {
         lazyEndPosition = slider.difficultyStackedPosition + slider.path.positionAt(endTimeMin)
 
         var currentCursorPosition = slider.difficultyStackedPosition
-        let scalingFactor = Double(DifficultyHitObject.normalizedRadius / slider.difficultyRadius)
+        let scalingFactor = Double(DifficultyHitObject.normalizedRadius / Float(slider.difficultyRadius))
 
         if nestedObjects.count > 1 {
             for i in 1..<nestedObjects.count {

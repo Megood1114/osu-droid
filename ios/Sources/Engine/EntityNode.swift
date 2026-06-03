@@ -46,7 +46,7 @@ class EntityNode: SKNode {
     // MARK: - Hit Testing
     
     /// Replaces AndEngine's `contains(pX, pY)`
-    func containsPoint(_ point: CGPoint) -> Bool {
+    override func contains(_ point: CGPoint) -> Bool {
         return self.calculateAccumulatedFrame().contains(point)
     }
     

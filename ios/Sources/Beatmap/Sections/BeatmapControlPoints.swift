@@ -3,16 +3,16 @@ import Foundation
 /// Contains information about the timing (control) points of a beatmap.
 public class BeatmapControlPoints {
     /// The manager for timing control points of this beatmap.
-    public let timing = TimingControlPointManager()
+    let timing = TimingControlPointManager()
 
     /// The manager for difficulty control points of this beatmap.
-    public let difficulty = DifficultyControlPointManager()
+    let difficulty = DifficultyControlPointManager()
 
     /// The manager for effect control points of this beatmap.
-    public let effect = EffectControlPointManager()
+    let effect = EffectControlPointManager()
 
     /// The manager for sample control points of this beatmap.
-    public let sample = SampleControlPointManager()
+    let sample = SampleControlPointManager()
     
     public init() {}
 

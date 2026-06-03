@@ -103,9 +103,9 @@ class ControlPointManager<T: ControlPoint>: Sequence {
         }
 
         // Subtract 1 from start index as the binary search from findInsertionIndex would return the next control point
-        let startIndex = max(findInsertionIndex(start) - 1, 0)
+        let startIndex = Swift.max(findInsertionIndex(start) - 1, 0)
         // End index does not matter as the range upper bound is exclusive
-        let endIndex = min(max(findInsertionIndex(end), startIndex + 1), controlPoints.count)
+        let endIndex = Swift.min(Swift.max(findInsertionIndex(end), startIndex + 1), controlPoints.count)
 
         return Array(controlPoints[startIndex..<endIndex])
     }

@@ -49,8 +49,8 @@ class GameViewController: UIViewController {
         }
         
         // 2. Parse the beatmap
-        let parser = BeatmapParser()
-        let beatmap = parser.parse(parsedOsuPath)
+        let parser = BeatmapParser(path: parsedOsuPath)
+        let beatmap = try? parser.parse(withHitObjects: true)
         
         guard let playableMap = beatmap else {
             showError("Failed to parse the .osu file.")
