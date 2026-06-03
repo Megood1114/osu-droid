@@ -256,13 +256,13 @@ class Slider: HitObject {
             startTime + Double(HitObject.controlPointLeniency) + 1
         )
 
-        samples = samples.map { sampleControlPoint.applyTo($0) }
+        samples = samples.map { sampleControlPoint.applyTo(hitSampleInfo: applyTo($0)) }
 
         for i in nodeSamples.indices {
             let time = startTime + Double(i) * spanDuration + Double(HitObject.controlPointLeniency)
             let nodeSamplePoint = controlPoints.sample.controlPointAt(time)
 
-            nodeSamples[i] = nodeSamples[i].map { nodeSamplePoint.applyTo($0) }
+            nodeSamples[i] = nodeSamples[i].map { nodeSamplePoint.applyTo(hitSampleInfo: applyTo($0)) }
         }
 
         createSlidingSamples(controlPoints: controlPoints)
@@ -466,7 +466,7 @@ class Slider: HitObject {
             } else {
                 let time = nested.startTime + Double(HitObject.controlPointLeniency)
                 let tickSamplePoint = controlPoints.sample.controlPointAt(time)
-                nested.samples.append(tickSamplePoint.applyTo(Slider.baseTickSample))
+                nested.samples.append(tickSamplePoint.applyTo(hitSampleInfo: Slider.baseTickSample))
             }
         }
     }

@@ -6,7 +6,7 @@ open class PlayableBeatmap: IBeatmap {
     public let mode: GameMode
     
     /// The `Mod`s that were applied to this `PlayableBeatmap`.
-    public let mods: ModHashMap
+    public let mods: [Mod]
     
     public var formatVersion: Int { baseBeatmap.formatVersion }
     public var general: BeatmapGeneral { baseBeatmap.general }
@@ -26,23 +26,23 @@ open class PlayableBeatmap: IBeatmap {
     public let speedMultiplier: Float
     
     /// The `HitWindow` of this `PlayableBeatmap`.
-    public lazy var hitWindow: HitWindow = {
+    lazy var hitWindow: HitWindow = {
         return createHitWindow()
     }()
     
     public init(baseBeatmap: IBeatmap, mode: GameMode, mods: [Mod]? = nil) {
         self.baseBeatmap = baseBeatmap
         self.mode = mode
-        self.mods = ModHashMap(mods)
+        self.mods = mods ?? []
         if let mods = mods {
-            self.speedMultiplier = Float(ModUtils.calculateRateWithMods(mods, Double.infinity))
+            self.speedMultiplier = mods.compactMap { self.speedMultiplier = Float(ModUtils.calculateRateWithMods(mods, Double.infinity)) as? ModRateAdjust }.reduce(1.0) { self.speedMultiplier = Float(ModUtils.calculateRateWithMods(mods, Double.infinity)) * $1.trackRateMultiplier }
         } else {
             self.speedMultiplier = 1.0
         }
     }
     
     /// Creates the `HitWindow` of this `PlayableBeatmap`.
-    open func createHitWindow() -> HitWindow {
+    func createHitWindow() -> HitWindow {
         fatalError("createHitWindow() must be overridden")
     }
 }

@@ -41,7 +41,7 @@ class SliderNode: HitObjectNode {
         let fakeHead = HitCircle(
             startTime: slider.startTime,
             position: slider.position,
-            newCombo: slider.isNewCombo,
+            isNewCombo: slider.isNewCombo,
             comboOffset: slider.comboOffset
         )
         headCircle = HitCircleNode(hitObject: fakeHead)

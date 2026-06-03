@@ -43,9 +43,9 @@ class SampleControlPoint: ControlPoint {
         let volume = hitSampleInfo.volume > 0 ? hitSampleInfo.volume : sampleVolume
 
         if let h = hitSampleInfo as? FileHitSampleInfo {
-            return h.withVolume(volume)
+            return h.copy(volume: volume)
         } else if let h = hitSampleInfo as? BankHitSampleInfo {
-            return h.with(
+            return h.copy(
                 volume: volume,
                 bank: h.bank != .none ? h.bank : sampleBank,
                 customSampleBank: h.customSampleBank > 0 ? h.customSampleBank : customSampleBank
