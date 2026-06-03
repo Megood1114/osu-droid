@@ -28,7 +28,7 @@ public final class StandardFlashlight: StandardStrainSkill {
         return pow(strainDecayBase, ms / 1000.0)
     }
 
-    public static func difficultyToPerformance(difficulty: Double) -> Double {
+    public override class func difficultyToPerformance(difficulty: Double) -> Double {
         return pow(difficulty, 2.0) * 25.0
     }
 }

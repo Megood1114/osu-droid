@@ -56,7 +56,7 @@ public final class DroidAim: DroidStrainSkill {
         return pow(strainDecayBase, ms / 1000.0)
     }
 
-    public static func difficultyToPerformance(difficulty: Double) -> Double {
+    public override class func difficultyToPerformance(difficulty: Double) -> Double {
         return StrainSkill.difficultyToPerformance(difficulty: pow(difficulty, 0.8))
     }
 }

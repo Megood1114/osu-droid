@@ -37,7 +37,7 @@ public final class DroidFlashlight: DroidStrainSkill {
         return pow(strainDecayBase, ms / 1000.0)
     }
 
-    public static func difficultyToPerformance(difficulty: Double) -> Double {
+    public override class func difficultyToPerformance(difficulty: Double) -> Double {
         return pow(difficulty, 1.6) * 25.0
     }
 }

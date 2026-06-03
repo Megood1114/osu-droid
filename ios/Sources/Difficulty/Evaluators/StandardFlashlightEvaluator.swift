@@ -19,14 +19,14 @@ public final class StandardFlashlightEvaluator {
             cumulativeStrainTime += last.strainTime
 
             if !(currentObject.obj is Spinner) {
-                let jumpDistance = current.obj.difficultyStackedPosition.getDistance(currentObject.obj.difficultyStackedEndPosition)
+                let jumpDistance = Double(current.obj.difficultyStackedPosition.getDistance(currentObject.obj.difficultyStackedEndPosition))
 
                 if i == 0 {
                     smallDistNerf = min(1.0, jumpDistance / 75.0)
                 }
 
                 let stackNerf = min(1.0, currentObject.lazyJumpDistance / scalingFactor / 25.0)
-                let opacityBonus = 1.0 + 0.4 * (1.0 - current.opacityAt(currentObject.obj.startTime, mods))
+                let opacityBonus = 1.0 + 0.4 * (1.0 - current.opacityAt(time: currentObject.obj.startTime, mods: mods))
 
                 result += stackNerf * opacityBonus * scalingFactor * jumpDistance / cumulativeStrainTime
 

@@ -116,7 +116,7 @@ open class StrainSkill<TObject: DifficultyHitObject>: Skill<TObject> {
         currentSectionPeak = calculateInitialStrain(time: time, current: current)
     }
 
-    public static func difficultyToPerformance(difficulty: Double) -> Double {
+    open class func difficultyToPerformance(difficulty: Double) -> Double {
         return pow(5.0 * max(1.0, difficulty / 0.0675) - 4.0, 3.0) / 100000.0
     }
 }
