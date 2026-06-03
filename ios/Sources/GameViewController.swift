@@ -8,6 +8,7 @@ class GameViewController: UIViewController {
         
         // Setup the main SKView
         let skView = SKView(frame: view.bounds)
+        skView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(skView)
         
         // Initialize our Game Engine

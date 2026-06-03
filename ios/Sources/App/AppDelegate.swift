@@ -35,13 +35,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Audio Session
 
     private func configureAudioSession() {
-        // Audio session will be configured when BASS is initialized.
         // BASS manages its own audio session on iOS.
         // We just need to ensure the category is set for playback.
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
+            
+            // Initialize BASS Audio Engine
+            if BASS_Init(-1, 44100, 0, nil, nil) == 0 {
+                let error = BASS_ErrorGetCode()
+                if error != BASS_ERROR_ALREADY {
+                    print("[osu!droid] Failed to initialize BASS. Error code: \(error)")
+                }
+            } else {
+                print("[osu!droid] BASS initialized successfully.")
+            }
         } catch {
             print("[osu!droid] Failed to configure audio session: \(error)")
         }

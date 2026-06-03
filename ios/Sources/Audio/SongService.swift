@@ -56,6 +56,7 @@ class SongService {
         channel = BASS_FX_TempoCreate(channel, DWORD(BASS_STREAM_AUTOFREE))
         
         if channel == 0 {
+            print("[osu!droid] Failed to load audio file or create tempo channel. BASS Error: \(BASS_ErrorGetCode())")
             self.speed = 1.0
             self.adjustPitch = false
             return false
