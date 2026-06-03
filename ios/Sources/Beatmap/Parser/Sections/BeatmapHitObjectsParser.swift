@@ -29,6 +29,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
     private static let pipePropertyRegex = "[|]"
     
     override func parse(beatmap: Beatmap, line: String) throws {
+        print("[HitObjectsParser] Parsing line: \\(line)")
         var it = line.components(separatedBy: BeatmapSectionParser.COMMA_PROPERTY_REGEX)
         
         // Emulate dropLastWhile { it.isEmpty() }
@@ -43,6 +44,7 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
         it = Array(it.dropLast(dropCount))
         
         if it.count < 4 {
+            print("[HitObjectsParser] Malformed hit object (count < 4)")
             throw NSError(domain: "BeatmapHitObjectsParser", code: 0, userInfo: [NSLocalizedDescriptionKey: "Malformed hit object"])
         }
         
@@ -62,21 +64,28 @@ class BeatmapHitObjectsParser: BeatmapSectionParser {
         var bankInfo = SampleBankInfo()
         
         let objType = HitObjectType(rawValue: type % 16)
+        print("[HitObjectsParser] Object type: \\(String(describing: objType))")
         
         let obj: HitObject
         switch objType {
         case .normal, .normalNewCombo:
             obj = try createCircle(pars: it, beatmap: beatmap, time: time, position: position, isNewCombo: beatmap.hitObjects.objects.isEmpty || isNewCombo, comboOffset: comboOffset, bankInfo: &bankInfo)
         case .slider, .sliderNewCombo:
+            print("[HitObjectsParser] Creating slider...")
             obj = try createSlider(pars: it, beatmap: beatmap, time: time, startPosition: position, isNewCombo: beatmap.hitObjects.objects.isEmpty || isNewCombo, comboOffset: comboOffset, soundType: soundType, bankInfo: &bankInfo)
+            print("[HitObjectsParser] Slider created.")
         case .spinner:
+            print("[HitObjectsParser] Creating spinner...")
             obj = try createSpinner(pars: it, beatmap: beatmap, time: time, isNewCombo: isNewCombo, bankInfo: &bankInfo)
+            print("[HitObjectsParser] Spinner created.")
         default:
+            print("[HitObjectsParser] Unknown object type")
             throw NSError(domain: "BeatmapHitObjectsParser", code: 0, userInfo: [NSLocalizedDescriptionKey: "Malformed hit object"])
         }
         
         obj.samples.append(contentsOf: convertSoundType(soundType: soundType, bankInfo: bankInfo))
         beatmap.hitObjects.add(obj)
+        print("[HitObjectsParser] Object added successfully.")
     }
     
     private func createCircle(pars: [String], beatmap: Beatmap, time: Double, position: Vector2, isNewCombo: Bool, comboOffset: Int, bankInfo: inout SampleBankInfo) throws -> HitCircle {
