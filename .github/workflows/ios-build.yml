@@ -64,6 +64,7 @@ jobs:
           
           if [ -d "/tmp/bass_fx-ios/bass_fx.xcframework" ]; then
             cp -R /tmp/bass_fx-ios/bass_fx.xcframework Frameworks/
+            cp /tmp/bass_fx-ios/*.h Frameworks/
           else
             mkdir -p Frameworks/bass_fx.xcframework
           fi
